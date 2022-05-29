@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">DualWallpaper</string>
+
+    <string name="select">Select</string>
+    <string name="lock_screen">Lock screen</string>
+    <string name="home_screen">Home screen</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+
+    <string name="use_current">Use current</string>
+    <string name="pick_new">Pick new one</string>
+    <string name="delete">Delete</string>
+    <string name="wallpaper_service">WallpaperService</string>
+    <string name="noti_desc">Click to hide this notification</string>
+</resources>

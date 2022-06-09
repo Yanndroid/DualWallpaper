@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <DropDownPreference
+        android:defaultValue="off"
+        android:entries="@array/preferences_main_entries"
+        android:entryValues="@array/preferences_main_values"
+        android:key="main_pref"
+        android:title="@string/function_mode"
+        app:useSimpleSummaryProvider="true" />
+</PreferenceScreen>

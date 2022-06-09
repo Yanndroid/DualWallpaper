@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="preferences_main_entries">
+        <item>@string/off</item>
+        <item>@string/wallpaper_service</item>
+        <item>@string/live_wallpaper</item>
+    </string-array>
+    <string-array name="preferences_main_values">
+        <item>off</item>
+        <item>wps</item>
+        <item>lwp</item>
+    </string-array>
+</resources>

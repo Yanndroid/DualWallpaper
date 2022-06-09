@@ -1,6 +1,7 @@
 package de.dlyt.yanndroid.dualwallpaper.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.view.LayoutInflater;
@@ -73,17 +74,6 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
         return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.viewpager_page_layout, parent, false));
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView lock_screen_preview;
-        ImageView home_screen_preview;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            lock_screen_preview = itemView.findViewById(R.id.lock_screen_preview);
-            home_screen_preview = itemView.findViewById(R.id.home_screen_preview);
-        }
-    }
-
     private void wallpaperOptionsDialog(ImageView imageView, boolean homeScreen, boolean lightMode) {
         File wallpaperFile = new File(wallpaperUtil.getWallpaperPath(homeScreen, lightMode));
         CharSequence[] dialogOptions = wallpaperFile.exists() ?
@@ -94,11 +84,13 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
                 .setItems(dialogOptions, (dialog, which) -> {
                     switch (which) {
                         case 0:
-                            wallpaperUtil.saveWallpaper(homeScreen, lightMode);
+                            wallpaperUtil.saveCurrentWallpaper(homeScreen, lightMode);
                             updateImages(imageView, homeScreen, lightMode);
                             break;
                         case 1:
-                            //todo
+                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                            intent.setType("image/*");
+                            ((MainActivity) context).startActivityForResult(intent, 5000 + (homeScreen ? 1 << 1 : 0) + (lightMode ? 1 : 0));
                             break;
                         case 2:
                             wallpaperFile.delete();
@@ -107,5 +99,16 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
                     }
                 }).create();
         alertDialog.show();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView lock_screen_preview;
+        ImageView home_screen_preview;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            lock_screen_preview = itemView.findViewById(R.id.lock_screen_preview);
+            home_screen_preview = itemView.findViewById(R.id.home_screen_preview);
+        }
     }
 }

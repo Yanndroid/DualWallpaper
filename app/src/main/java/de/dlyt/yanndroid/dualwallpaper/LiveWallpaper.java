@@ -11,6 +11,8 @@ import android.os.Handler;
 import android.service.wallpaper.WallpaperService;
 import android.view.SurfaceHolder;
 
+import java.io.File;
+
 public class LiveWallpaper extends WallpaperService {
 
     private WallpaperUtil wallpaperUtil;
@@ -26,21 +28,16 @@ public class LiveWallpaper extends WallpaperService {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         if (uiMode != newConfig.uiMode) {
-            //dynamicThemeEngine.update(newConfig);
             wallpaperUtil.loadWallpaper(false, newConfig.uiMode != 33);
             uiMode = newConfig.uiMode;
         }
         dynamicThemeEngine.update(newConfig);
-        //wallpaperUtil.loadWallpaper(false, newConfig.uiMode != 33);
     }
 
     private class DynamicThemeEngine extends Engine {
         private final Handler handler = new Handler();
-        private final Runnable runnable = this::draw;
         private boolean lightMode, portrait;
-
-        private boolean visible = true;
-
+        private boolean visible = true;        private final Runnable runnable = this::draw;
         public DynamicThemeEngine(Context context) {
             update(context.getResources().getConfiguration());
         }
@@ -54,9 +51,11 @@ public class LiveWallpaper extends WallpaperService {
         private void draw() {
             SurfaceHolder holder = getSurfaceHolder();
             Canvas canvas = null;
+            String wallpaperPath = wallpaperUtil.getWallpaperPath(true, lightMode);
+            if (!new File(wallpaperPath).exists()) return;
             try {
                 canvas = holder.lockCanvas();
-                Bitmap bMap = BitmapFactory.decodeFile(wallpaperUtil.getWallpaperPath(true, lightMode));
+                Bitmap bMap = BitmapFactory.decodeFile(wallpaperPath);
                 Rect surfaceFrame = holder.getSurfaceFrame();
 
                 int cropH = !portrait ? 0 : (bMap.getWidth() - ((bMap.getHeight() / surfaceFrame.height()) * surfaceFrame.width())) / 2;
@@ -90,6 +89,10 @@ public class LiveWallpaper extends WallpaperService {
             this.visible = false;
             handler.removeCallbacks(runnable);
         }
+
+
+
+
     }
 
 }

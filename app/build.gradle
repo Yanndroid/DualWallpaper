@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -10,7 +11,7 @@ android {
         minSdk 26
         targetSdk 32
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -30,12 +31,18 @@ android {
 configurations.all {
     exclude group: 'androidx.appcompat', module: 'appcompat'
     exclude group: 'androidx.core', module: 'core'
-    //exclude group: 'androidx.drawerlayout', module: 'drawerlayout'
-    //exclude group: 'androidx.viewpager', module: 'viewpager'
+    exclude group: 'androidx.drawerlayout', module: 'drawerlayout'
+    exclude group: 'androidx.viewpager', module: 'viewpager'
+    exclude group: 'androidx.fragment', module: 'fragment'
+    exclude group: 'androidx.customview', module: 'customview'
+    exclude group: 'androidx.coordinatorlayout', module: 'coordinatorlayout'
 }
 
 dependencies {
-    implementation 'io.github.oneuiproject:lib:1.0.0'
-    implementation 'io.github.oneuiproject.sesl:appcompat:1.0.0'
-    implementation 'io.github.oneuiproject.sesl:material:1.0.0'
+    implementation 'io.github.oneuiproject:design:1.0.0'
+    implementation 'io.github.oneuiproject.sesl:appcompat:1.2.1'
+    implementation 'io.github.oneuiproject.sesl:material:1.2.0'
+    implementation 'io.github.oneuiproject.sesl:preference:1.1.0'
+    implementation 'io.github.oneuiproject.sesl:recyclerview:1.1.0'
+    implementation 'com.google.firebase:firebase-database:20.0.5'
 }

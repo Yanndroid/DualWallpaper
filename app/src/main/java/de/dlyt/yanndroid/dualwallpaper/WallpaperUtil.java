@@ -4,9 +4,12 @@ import android.Manifest;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.ParcelFileDescriptor;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
+import androidx.preference.PreferenceManager;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,9 +29,21 @@ public class WallpaperUtil {
         this.wallpaperManager = WallpaperManager.getInstance(context);
     }
 
-    public void saveWallpaper(boolean homeScreen, boolean lightMode) {
+    public void saveCurrentWallpaper(boolean homeScreen, boolean lightMode) {
         if (!hasPermission()) return;
-        saveInputStream(new ParcelFileDescriptor.AutoCloseInputStream(wallpaperManager.getWallpaperFile(homeScreen ? WallpaperManager.FLAG_SYSTEM : WallpaperManager.FLAG_LOCK)), new File(getWallpaperPath(homeScreen, lightMode)));
+        ParcelFileDescriptor fileDescriptor = wallpaperManager.getWallpaperFile(homeScreen ? WallpaperManager.FLAG_SYSTEM : WallpaperManager.FLAG_LOCK);
+        if (fileDescriptor == null) {
+            Toast.makeText(context, R.string.wallpaper_not_supported, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        saveInputStream(new ParcelFileDescriptor.AutoCloseInputStream(fileDescriptor), new File(getWallpaperPath(homeScreen, lightMode)));
+    }
+
+    public void saveUriWallpaper(Uri wallpaperUri, boolean homeScreen, boolean lightMode) throws FileNotFoundException {
+        saveInputStream(context.getContentResolver().openInputStream(wallpaperUri), new File(getWallpaperPath(homeScreen, lightMode)));
+        if (PreferenceManager.getDefaultSharedPreferences(context).getString("main_pref", "off").equals("wps") && (context.getResources().getConfiguration().uiMode != 33) == lightMode) {
+            loadWallpaper(homeScreen, lightMode);
+        }
     }
 
     public void loadWallpaper(boolean homeScreen, boolean lightMode) {
@@ -58,7 +73,7 @@ public class WallpaperUtil {
         }
     }
 
-    private void saveInputStream(InputStream in, File file) {
+    public void saveInputStream(InputStream in, File file) {
         OutputStream out = null;
         try {
             out = new FileOutputStream(file);

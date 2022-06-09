@@ -26,38 +26,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <dev.oneuiproject.oneui.widget.RoundLinearLayout
+
+        <FrameLayout
+            android:id="@+id/main_preferences"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/oui_background_color">
-
-            <androidx.core.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="24dp"
-                    android:paddingVertical="15dp">
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/use_service_switch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="use Service" />
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:onClick="setLW"
-                        android:text="Live Wallpaper" />
-
-                </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
-        </dev.oneuiproject.oneui.widget.RoundLinearLayout>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </dev.oneuiproject.oneui.layout.ToolbarLayout>

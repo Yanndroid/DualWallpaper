@@ -1,0 +1,35 @@
+name: New Release
+on:
+  workflow_dispatch:
+
+jobs:
+ release:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Checkout
+       uses: actions/checkout@v2
+     - name: Init values
+       id: values
+       run: |
+          version=$(grep -Po -m 1 '(?<=versionName ).*' ./app/build.gradle | tr -d \")
+          echo ::set-output name=name::DualWallpaper v$version
+          echo ::set-output name=tag::v$version
+          echo ::set-output name=apk::DualWallpaper_v$version
+     - name: Create release
+       id: create_release
+       uses: actions/create-release@v1
+       env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       with:
+         release_name: ${{ steps.values.outputs.name }}
+         tag_name: ${{ steps.values.outputs.tag }}
+         body: No changelog
+     - name: Add apk
+       uses: actions/upload-release-asset@v1
+       env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       with:
+         upload_url: ${{ steps.create_release.outputs.upload_url }} 
+         asset_path: ./app/release/app-release.apk
+         asset_name: ${{ steps.values.outputs.apk }}.apk
+         asset_content_type: application/vnd.android.package-archive

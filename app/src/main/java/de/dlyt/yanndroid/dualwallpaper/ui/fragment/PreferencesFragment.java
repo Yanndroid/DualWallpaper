@@ -63,18 +63,13 @@ public class PreferencesFragment extends PreferenceFragmentCompat
         super.onCreate(bundle);
 
         LayoutPreference layoutPreference = findPreference("preview_pref");
-
-        FragmentActivity activity = requireActivity();
-        if (activity instanceof MainActivity) {
-            ViewPager2 viewPager = layoutPreference.findViewById(R.id.viewPager);
-            viewPager.setAdapter(adapter);
-            viewPager.seslGetListView().setNestedScrollingEnabled(false);
-            TabLayout tabLayout = layoutPreference.findViewById(R.id.tabLayout);
-            tabLayout.seslSetSubTabStyle();
-            new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> tab.setText(((ViewPagerAdapter) viewPager.getAdapter()).getTitle(position))).attach();
-        } else {
-            getPreferenceScreen().removePreference(layoutPreference);
-        }
+        ViewPager2 viewPager = layoutPreference.findViewById(R.id.viewPager);
+        viewPager.setAdapter(adapter);
+        viewPager.seslGetListView().setNestedScrollingEnabled(false);
+        TabLayout tabLayout = layoutPreference.findViewById(R.id.tabLayout);
+        tabLayout.seslSetSubTabStyle();
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position)
+                -> tab.setText(((ViewPagerAdapter) viewPager.getAdapter()).getTitle(position))).attach();
 
         DropDownPreference main_pref = findPreference("main_pref");
         main_pref.seslSetSummaryColor(getColoredSummaryColor());
@@ -91,7 +86,7 @@ public class PreferencesFragment extends PreferenceFragmentCompat
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        adapter.notifyDataSetChanged();
+        adapter.notifyItemRangeChanged(0, 2);
     }
 
     @Override

@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <dev.oneuiproject.oneui.preference.LayoutPreference
+        android:key="preview_pref"
+        android:layout="@layout/preview_preference_layout"
+        android:selectable="false" />
+
+    <dev.oneuiproject.oneui.preference.InsetPreferenceCategory
+        app:roundedCorners="top_left|top_right"/>
+
     <DropDownPreference
         android:defaultValue="off"
         android:entries="@array/preferences_main_entries"
@@ -8,4 +17,5 @@
         android:key="main_pref"
         android:title="@string/function_mode"
         app:useSimpleSummaryProvider="true" />
+
 </PreferenceScreen>

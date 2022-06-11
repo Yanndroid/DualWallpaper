@@ -1,7 +1,8 @@
-package de.dlyt.yanndroid.dualwallpaper.ui;
+package de.dlyt.yanndroid.dualwallpaper.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.view.LayoutInflater;
@@ -15,25 +16,21 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import de.dlyt.yanndroid.dualwallpaper.R;
 import de.dlyt.yanndroid.dualwallpaper.WallpaperUtil;
+import de.dlyt.yanndroid.dualwallpaper.ui.activity.MainActivity;
 
 public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.ViewHolder> {
-
     private Context context;
     private WallpaperUtil wallpaperUtil;
-    private int imageWidth, imageHeight;
 
     public ViewPagerAdapter(Context context, WallpaperUtil wallpaperUtil) {
         super();
         this.context = context;
         this.wallpaperUtil = wallpaperUtil;
-
-        Point size = new Point();
-        ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRealSize(size);
-        imageWidth = (int) (size.x / 2.8);
-        imageHeight = (int) (size.y / 2.8);
     }
 
     public String getTitle(int position) {
@@ -54,13 +51,20 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     }
 
     private void updateImages(ImageView imageView, boolean homeScreen, boolean lightMode) {
-        imageView.setImageBitmap(BitmapFactory.decodeFile(wallpaperUtil.getWallpaperPath(homeScreen, lightMode)));
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            Bitmap image = BitmapFactory.decodeFile(wallpaperUtil.getWallpaperPath(homeScreen, lightMode));
+            imageView.post(() -> imageView.setImageBitmap(image));
+        });
     }
 
     private void setImageViewSize(ImageView imageView) {
+        Point size = new Point();
+        ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRealSize(size);
+
         ViewGroup.LayoutParams lph = imageView.getLayoutParams();
-        lph.width = imageWidth;
-        lph.height = imageHeight;
+        lph.width = (int) (size.x / 2.8);
+        lph.height = (int) (size.y / 2.8);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package de.dlyt.yanndroid.dualwallpaper.ui;
+package de.dlyt.yanndroid.dualwallpaper.ui.activity;
 
 import android.content.Intent;
 import android.net.Uri;

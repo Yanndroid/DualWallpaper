@@ -7,30 +7,12 @@
     android:layout_height="match_parent"
     app:expanded="false"
     app:title="@string/app_name"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.activity.MainActivity">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/main_preferences"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_location="main_content">
+        app:layout_location="main_content" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp" />
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-        <FrameLayout
-            android:id="@+id/main_preferences"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
 </dev.oneuiproject.oneui.layout.ToolbarLayout>

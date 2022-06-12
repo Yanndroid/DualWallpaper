@@ -40,13 +40,6 @@ public class PreferencesFragment extends PreferenceFragmentCompat
     private ViewPagerAdapter adapter;
     private PreferenceRelatedCard mRelativeLinkCard;
 
-    public static PreferencesFragment newInstance(ViewPagerAdapter adapter, WallpaperUtil wallpaperUtil) {
-        PreferencesFragment fragment = new PreferencesFragment();
-        fragment.adapter = adapter;
-        fragment.wallpaperUtil = wallpaperUtil;
-        return fragment;
-    }
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -63,13 +56,19 @@ public class PreferencesFragment extends PreferenceFragmentCompat
         super.onCreate(bundle);
 
         LayoutPreference layoutPreference = findPreference("preview_pref");
-        ViewPager2 viewPager = layoutPreference.findViewById(R.id.viewPager);
-        viewPager.setAdapter(adapter);
-        viewPager.seslGetListView().setNestedScrollingEnabled(false);
-        TabLayout tabLayout = layoutPreference.findViewById(R.id.tabLayout);
-        tabLayout.seslSetSubTabStyle();
-        new TabLayoutMediator(tabLayout, viewPager, (tab, position)
-                -> tab.setText(((ViewPagerAdapter) viewPager.getAdapter()).getTitle(position))).attach();
+        if (adapter != null && wallpaperUtil != null ) {
+            ViewPager2 viewPager = layoutPreference.findViewById(R.id.viewPager);
+            viewPager.seslGetListView().setNestedScrollingEnabled(false);
+            viewPager.setAdapter(adapter);
+
+            TabLayout tabLayout = layoutPreference.findViewById(R.id.tabLayout);
+            tabLayout.seslSetSubTabStyle();
+
+            new TabLayoutMediator(tabLayout, viewPager, (tab, position)
+                    -> tab.setText(((ViewPagerAdapter) viewPager.getAdapter()).getTitle(position))).attach();
+        } else {
+            getPreferenceScreen().removePreference(layoutPreference);
+        }
 
         DropDownPreference main_pref = findPreference("main_pref");
         main_pref.seslSetSummaryColor(getColoredSummaryColor());
@@ -86,7 +85,9 @@ public class PreferencesFragment extends PreferenceFragmentCompat
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        adapter.notifyItemRangeChanged(0, 2);
+        if (adapter != null) {
+            adapter.notifyItemRangeChanged(0, 2);
+        }
     }
 
     @Override
@@ -111,13 +112,20 @@ public class PreferencesFragment extends PreferenceFragmentCompat
                 case "off":
                     mContext.stopService(new Intent(mContext, WallpaperService.class));
                     boolean lightMode = getResources().getConfiguration().uiMode != 33;
-                    wallpaperUtil.loadWallpaper(true, lightMode);
-                    wallpaperUtil.loadWallpaper(false, lightMode);
+                    if (wallpaperUtil != null) {
+                        wallpaperUtil.loadWallpaper(true, lightMode);
+                        wallpaperUtil.loadWallpaper(false, lightMode);
+                    }
                     break;
             }
             return true;
         }
         return false;
+    }
+
+    public void initFields(ViewPagerAdapter adapter, WallpaperUtil wallpaperUtil) {
+        this.adapter = adapter;
+        this.wallpaperUtil = wallpaperUtil;
     }
 
     private ColorStateList getColoredSummaryColor() {

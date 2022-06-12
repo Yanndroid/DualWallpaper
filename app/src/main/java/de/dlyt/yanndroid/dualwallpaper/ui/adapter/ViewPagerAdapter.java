@@ -56,6 +56,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
             Bitmap image = BitmapFactory.decodeFile(wallpaperUtil.getWallpaperPath(homeScreen, lightMode));
             imageView.post(() -> imageView.setImageBitmap(image));
         });
+        executor.shutdown();
     }
 
     private void setImageViewSize(ImageView imageView) {

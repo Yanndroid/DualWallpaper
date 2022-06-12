@@ -3,20 +3,11 @@ package de.dlyt.yanndroid.dualwallpaper.ui.activity;
 import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.WallpaperManager;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,27 +16,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentManager;
-import androidx.preference.DropDownPreference;
-import androidx.preference.Preference;
-import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
-import androidx.viewpager2.widget.ViewPager2;
-
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.io.FileNotFoundException;
 
-import de.dlyt.yanndroid.dualwallpaper.LiveWallpaper;
 import de.dlyt.yanndroid.dualwallpaper.R;
 import de.dlyt.yanndroid.dualwallpaper.WallpaperService;
 import de.dlyt.yanndroid.dualwallpaper.WallpaperUtil;
 import de.dlyt.yanndroid.dualwallpaper.ui.adapter.ViewPagerAdapter;
 import de.dlyt.yanndroid.dualwallpaper.ui.fragment.PreferencesFragment;
 import dev.oneuiproject.oneui.layout.ToolbarLayout;
-import dev.oneuiproject.oneui.preference.LayoutPreference;
-import dev.oneuiproject.oneui.preference.internal.PreferenceRelatedCard;
-import dev.oneuiproject.oneui.utils.PreferenceUtils;
 
 public class MainActivity extends AppCompatActivity {
     private WallpaperUtil wallpaperUtil;
@@ -69,8 +49,11 @@ public class MainActivity extends AppCompatActivity {
         if (PreferenceManager.getDefaultSharedPreferences(this).getString("main_pref", "off").equals("wps"))
             startForegroundService(new Intent(MainActivity.this, WallpaperService.class));
 
+        PreferencesFragment fragment = new PreferencesFragment();
+        fragment.initFields(adapter, wallpaperUtil);
+
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.main_preferences, PreferencesFragment.newInstance(adapter, wallpaperUtil)).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_preferences, fragment).commit();
         fragmentManager.executePendingTransactions();
 
         if (getIntent().getAction().equals(Intent.ACTION_ATTACH_DATA))

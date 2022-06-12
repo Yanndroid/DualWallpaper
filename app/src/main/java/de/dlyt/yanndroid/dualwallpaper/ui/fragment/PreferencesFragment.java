@@ -56,12 +56,7 @@ public class PreferencesFragment extends PreferenceFragmentCompat
         super.onCreate(bundle);
 
         LayoutPreference layoutPreference = findPreference("preview_pref");
-
-        FragmentActivity activity = requireActivity();
-        if (activity instanceof MainActivity) {
-            adapter = ((MainActivity) activity).adapter;
-            wallpaperUtil = ((MainActivity) activity).wallpaperUtil;
-
+        if (adapter != null && wallpaperUtil != null ) {
             ViewPager2 viewPager = layoutPreference.findViewById(R.id.viewPager);
             viewPager.seslGetListView().setNestedScrollingEnabled(false);
             viewPager.setAdapter(adapter);
@@ -126,6 +121,11 @@ public class PreferencesFragment extends PreferenceFragmentCompat
             return true;
         }
         return false;
+    }
+
+    public void initFields(ViewPagerAdapter adapter, WallpaperUtil wallpaperUtil) {
+        this.adapter = adapter;
+        this.wallpaperUtil = wallpaperUtil;
     }
 
     private ColorStateList getColoredSummaryColor() {

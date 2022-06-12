@@ -8,6 +8,7 @@
         android:selectable="false" />
 
     <dev.oneuiproject.oneui.preference.InsetPreferenceCategory
+        app:height="1px"
         app:roundedCorners="top_left|top_right"/>
 
     <DropDownPreference

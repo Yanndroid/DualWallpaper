@@ -28,8 +28,8 @@ import de.dlyt.yanndroid.dualwallpaper.ui.fragment.PreferencesFragment;
 import dev.oneuiproject.oneui.layout.ToolbarLayout;
 
 public class MainActivity extends AppCompatActivity {
-    public WallpaperUtil wallpaperUtil;
-    public ViewPagerAdapter adapter;
+    private WallpaperUtil wallpaperUtil;
+    private ViewPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +49,11 @@ public class MainActivity extends AppCompatActivity {
         if (PreferenceManager.getDefaultSharedPreferences(this).getString("main_pref", "off").equals("wps"))
             startForegroundService(new Intent(MainActivity.this, WallpaperService.class));
 
+        PreferencesFragment fragment = new PreferencesFragment();
+        fragment.initFields(adapter, wallpaperUtil);
+
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.main_preferences, new PreferencesFragment()).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_preferences, fragment).commit();
         fragmentManager.executePendingTransactions();
 
         if (getIntent().getAction().equals(Intent.ACTION_ATTACH_DATA))

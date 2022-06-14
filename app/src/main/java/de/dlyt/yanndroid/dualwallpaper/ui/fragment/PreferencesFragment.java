@@ -7,14 +7,12 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.TypedValue;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.preference.DropDownPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -27,7 +25,6 @@ import de.dlyt.yanndroid.dualwallpaper.LiveWallpaper;
 import de.dlyt.yanndroid.dualwallpaper.R;
 import de.dlyt.yanndroid.dualwallpaper.WallpaperService;
 import de.dlyt.yanndroid.dualwallpaper.WallpaperUtil;
-import de.dlyt.yanndroid.dualwallpaper.ui.activity.MainActivity;
 import de.dlyt.yanndroid.dualwallpaper.ui.adapter.ViewPagerAdapter;
 import dev.oneuiproject.oneui.preference.LayoutPreference;
 import dev.oneuiproject.oneui.preference.internal.PreferenceRelatedCard;
@@ -56,7 +53,7 @@ public class PreferencesFragment extends PreferenceFragmentCompat
         super.onCreate(bundle);
 
         LayoutPreference layoutPreference = findPreference("preview_pref");
-        if (adapter != null && wallpaperUtil != null ) {
+        if (adapter != null && wallpaperUtil != null) {
             ViewPager2 viewPager = layoutPreference.findViewById(R.id.viewPager);
             viewPager.seslGetListView().setNestedScrollingEnabled(false);
             viewPager.setAdapter(adapter);
@@ -153,9 +150,12 @@ public class PreferencesFragment extends PreferenceFragmentCompat
             mRelativeLinkCard = PreferenceUtils.createRelatedCard(mContext);
             mRelativeLinkCard.addButton(mContext.getString(R.string.service_notification), v -> startActivity(new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, mContext.getPackageName()).putExtra(Settings.EXTRA_CHANNEL_ID, "4000")));
             mRelativeLinkCard.addButton(mContext.getString(R.string.live_wallpaper), v -> startActivity(new Intent(WallpaperManager.ACTION_LIVE_WALLPAPER_CHOOSER)));
-            if (Build.MANUFACTURER.equals("samsung")) {
-                mRelativeLinkCard.addButton(mContext.getString(R.string.wallpaper_and_style), v -> startActivity(new Intent("com.samsung.intent.action.WALLPAPER_SETTING")));
+
+            Intent samsungWallpaperIntent = new Intent("com.samsung.intent.action.WALLPAPER_SETTING");
+            if (samsungWallpaperIntent.resolveActivity(mContext.getPackageManager()) != null) {
+                mRelativeLinkCard.addButton(mContext.getString(R.string.wallpaper_and_style), v -> startActivity(samsungWallpaperIntent));
             }
+
             mRelativeLinkCard.show(this);
         }
     }

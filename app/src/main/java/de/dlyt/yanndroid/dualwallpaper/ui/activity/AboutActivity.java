@@ -1,6 +1,10 @@
 package de.dlyt.yanndroid.dualwallpaper.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,52 +15,71 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.UpdateAvailability;
+
 import de.dlyt.yanndroid.dualwallpaper.R;
-import de.dlyt.yanndroid.dualwallpaper.utils.Updater;
 import dev.oneuiproject.oneui.layout.AppInfoLayout;
 
-public class AboutActivity extends AppCompatActivity implements AppInfoLayout.OnClickListener, Updater.UpdateChecker {
+public class AboutActivity extends AppCompatActivity implements AppInfoLayout.OnClickListener {
 
+    private static final String GITHUB_URL = "https://github.com/Yanndroid/DualWallpaper";
     private AppInfoLayout appInfoLayout;
-    private String update_url, update_version;
+    private AppUpdateManager appUpdateManager;
+    private AppUpdateInfo appUpdateInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
+        appUpdateManager = AppUpdateManagerFactory.create(this);
         appInfoLayout = findViewById(R.id.appInfoLayout);
-        appInfoLayout.setMainButtonClickListener(this);
-        Updater.checkForUpdate(this, this);
-    }
-
-    @Override
-    public void updateAvailable(boolean available, String url, String versionName) {
-        appInfoLayout.setStatus(available ? AppInfoLayout.UPDATE_AVAILABLE : AppInfoLayout.NO_UPDATE);
-        update_url = url;
-        update_version = versionName;
-    }
-
-    @Override
-    public void githubAvailable(String url) {
         AppCompatButton about_github = findViewById(R.id.about_github);
-        about_github.setVisibility(View.VISIBLE);
-        about_github.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url))));
+
+        appInfoLayout.setMainButtonClickListener(this);
+        about_github.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GITHUB_URL))));
+
+        checkForUpdate();
     }
 
-    @Override
-    public void noConnection() {
-        appInfoLayout.setStatus(AppInfoLayout.NO_CONNECTION);
+    private void checkForUpdate() {
+        appInfoLayout.setStatus(AppInfoLayout.LOADING);
+        NetworkInfo networkInfo = ((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+        if (!(networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected())) {
+            appInfoLayout.setStatus(AppInfoLayout.NO_CONNECTION);
+            return;
+        }
+
+        appUpdateManager.getAppUpdateInfo().addOnSuccessListener(appUpdateInfo -> {
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                appInfoLayout.setStatus(AppInfoLayout.UPDATE_AVAILABLE);
+                this.appUpdateInfo = appUpdateInfo;
+            } else {
+                appInfoLayout.setStatus(AppInfoLayout.NO_UPDATE);
+            }
+        }).addOnFailureListener(e -> {
+            e.printStackTrace();
+            appInfoLayout.setStatus(AppInfoLayout.NOT_UPDATEABLE);
+        });
     }
 
     @Override
     public void onUpdateClicked(View v) {
-        if (update_url != null) Updater.downloadAndInstall(this, update_url, update_version);
+        if (appUpdateInfo == null) return;
+        try {
+            appUpdateManager.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.IMMEDIATE, this, 6000);
+        } catch (IntentSender.SendIntentException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onRetryClicked(View v) {
-        Updater.checkForUpdate(this, this);
+        checkForUpdate();
     }
 
     @Override

@@ -1,0 +1,1 @@
+## DualWallpaper Privacy Policy

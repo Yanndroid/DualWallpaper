@@ -7,7 +7,6 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/about_github"
         style="@style/OneUI.AppInfoButton"
-        android:text="Github"
-        android:visibility="gone" />
+        android:text="Github" />
 
 </dev.oneuiproject.oneui.layout.AppInfoLayout>

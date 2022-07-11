@@ -27,6 +27,8 @@ import dev.oneuiproject.oneui.layout.AppInfoLayout;
 public class AboutActivity extends AppCompatActivity implements AppInfoLayout.OnClickListener {
 
     private static final String GITHUB_URL = "https://github.com/Yanndroid/DualWallpaper";
+    private static final String POEDITOR_URL = "https://poeditor.com/join/project/is9K6CJAaL";
+    private static final String DONATE_URL = "https://paypal.me/YanndroidDev";
     private AppInfoLayout appInfoLayout;
     private AppUpdateManager appUpdateManager;
     private AppUpdateInfo appUpdateInfo;
@@ -38,12 +40,13 @@ public class AboutActivity extends AppCompatActivity implements AppInfoLayout.On
 
         appUpdateManager = AppUpdateManagerFactory.create(this);
         appInfoLayout = findViewById(R.id.appInfoLayout);
-        AppCompatButton about_github = findViewById(R.id.about_github);
-
-        appInfoLayout.setMainButtonClickListener(this);
-        about_github.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GITHUB_URL))));
 
         checkForUpdate();
+
+        appInfoLayout.setMainButtonClickListener(this);
+        ((AppCompatButton) findViewById(R.id.about_source_code)).setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GITHUB_URL))));
+        ((AppCompatButton) findViewById(R.id.about_translations)).setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(POEDITOR_URL))));
+        ((AppCompatButton) findViewById(R.id.about_donate)).setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(DONATE_URL))));
     }
 
     private void checkForUpdate() {

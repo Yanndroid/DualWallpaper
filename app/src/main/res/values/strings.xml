@@ -21,6 +21,8 @@
     <string name="wallpaper_and_style">Wallpaper and Style</string>
     <string name="service_notification">Service Notification</string>
     <string name="set_wallpaper_as">Set wallpaper as</string>
-
+    <string name="translations">Translations</string>
+    <string name="donate">Donate</string>
+    <string name="source_code">Source Code</string>
 
 </resources>

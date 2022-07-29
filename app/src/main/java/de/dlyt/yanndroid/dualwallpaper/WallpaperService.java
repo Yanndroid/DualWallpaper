@@ -26,7 +26,7 @@ public class WallpaperService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e("WallpaperService", "onStartCommand");
         startForeground(3000, new NotificationCompat.Builder(this, "4000")
-                .setSmallIcon(dev.oneuiproject.oneui.R.drawable.ic_oui_wallpaper_outline)
+                .setSmallIcon(R.drawable.ic_oui_wallpaper_outline)
                 .setContentTitle(getString(R.string.wallpaper_service))
                 .setContentText(getString(R.string.noti_desc))
                 .setContentIntent(PendingIntent.getActivity(

@@ -54,7 +54,10 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             Bitmap image = BitmapFactory.decodeFile(wallpaperUtil.getWallpaperPath(homeScreen, lightMode));
-            imageView.post(() -> imageView.setImageBitmap(image));
+            if (image == null) return;
+            double scale = Math.max((double) imageView.getWidth() / (double) image.getWidth(), (double) imageView.getHeight() / (double) image.getHeight());
+            Bitmap scaledImage = Bitmap.createScaledBitmap(image, (int) (image.getWidth() * scale), (int) (image.getHeight() * scale), true);
+            imageView.post(() -> imageView.setImageBitmap(scaledImage));
         });
         executor.shutdown();
     }

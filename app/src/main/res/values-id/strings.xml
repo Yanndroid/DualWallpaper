@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- You can use "DualWallpaper" here. -->
+    <string name="app_name">"Dual Wallpaper"</string>
+    <string name="select">"Pilih"</string>
+    <string name="lock_screen">"Kunci layar"</string>
+    <string name="home_screen">"Layar depan"</string>
+    <string name="light">"Terang"</string>
+    <!-- Fuzzy -->
+    <string name="dark">"Gelap"</string>
+    <string name="use_current">"Gunakan saat ini"</string>
+    <string name="pick_new">"Pilih yang baru"</string>
+    <string name="delete">"Hapus"</string>
+    <string name="wallpaper_not_supported">"Wallpaper saat ini tidak didukung."</string>
+    <string name="function_mode">"Mode Fungsi"</string>
+    <string name="off">"Nonaktif"</string>
+    <string name="wallpaper_service">"Layanan Wallpaper"</string>
+    <string name="live_wallpaper">"Live Wallpaper"</string>
+    <string name="noti_desc">"Klik untuk menyembunyikan pemberitahuan ini"</string>
+    <string name="wallpaper_and_style">"Wallpaper dan Gaya"</string>
+    <string name="service_notification">"Layanan notifikasi"</string>
+    <string name="set_wallpaper_as">"Atur wallpaper sebagai"</string>
+    <string name="translations">"Terjemahan"</string>
+    <string name="donate">"Donasi"</string>
+    <string name="source_code">"Kode sumber"</string>
+</resources>

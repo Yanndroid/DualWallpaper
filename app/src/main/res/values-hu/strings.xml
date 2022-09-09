@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- You can use "DualWallpaper" here. -->
+    <string name="app_name">"DualWallpaper"</string>
+    <string name="select">"Kiválasztás"</string>
+    <string name="lock_screen">"Zárolt képernyő"</string>
+    <string name="home_screen">"Kezdőképernyő"</string>
+    <string name="light">"Világos"</string>
+    <string name="dark">"Sötét"</string>
+    <string name="use_current">"Jelenlegi használata"</string>
+    <string name="pick_new">"Új kiválasztása"</string>
+    <string name="delete">"Törlés"</string>
+    <string name="wallpaper_not_supported">"A jelenlegi háttérkép nem támogatott"</string>
+    <string name="function_mode">"Funkció mód"</string>
+    <string name="off">"Ki"</string>
+    <string name="wallpaper_service">"Háttérkép szolgáltatás"</string>
+    <string name="live_wallpaper">"Élő háttérkép"</string>
+    <string name="noti_desc">"Koppints az értesítés elrejtéséhez"</string>
+    <string name="wallpaper_and_style">"Háttérkép és stílus"</string>
+    <string name="service_notification">"Szolgáltatás értesítés"</string>
+    <string name="set_wallpaper_as">"Beállítás háttérképként"</string>
+    <string name="translations">"Fordítás"</string>
+    <string name="donate">"Adományozás"</string>
+    <string name="source_code">"Forráskód"</string>
+</resources>

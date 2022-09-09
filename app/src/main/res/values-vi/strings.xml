@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- You can use "DualWallpaper" here. -->
+    <string name="app_name">"DualWallpaper"</string>
+    <string name="select">"Chọn"</string>
+    <string name="lock_screen">"Màn hình khóa"</string>
+    <string name="home_screen">"Màn hình chính"</string>
+    <string name="light">"Sáng"</string>
+    <string name="dark">"Tối"</string>
+    <string name="use_current">"Sử dụng hình nền hiện tại"</string>
+    <string name="pick_new">"Chọn cái mới"</string>
+    <string name="delete">"Xóa"</string>
+    <string name="wallpaper_not_supported">"Hình nền hiện tại không được hỗ trợ"</string>
+    <string name="function_mode">"Chế độ hoạt động"</string>
+    <string name="off">"Tắt"</string>
+    <string name="wallpaper_service">"Dịch vụ hình nền"</string>
+    <string name="live_wallpaper">"Hình nền động"</string>
+    <string name="noti_desc">"Nhấn để ẩn thông báo này"</string>
+    <string name="wallpaper_and_style">"Hình nền và phong cách"</string>
+    <string name="service_notification">"Dịch vụ thông báo"</string>
+    <string name="set_wallpaper_as">"Đặt hình nền làm"</string>
+    <string name="translations">"Phiên dịch"</string>
+    <string name="donate">"Ủng hộ"</string>
+    <string name="source_code">"Mã nguồn"</string>
+</resources>

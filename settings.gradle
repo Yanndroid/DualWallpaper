@@ -4,6 +4,7 @@ pluginManagement {
         google()
         mavenCentral()
         mavenLocal()
+        maven { url 'https://jitpack.io' }
     }
 }
 dependencyResolutionManagement {
@@ -12,6 +13,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         mavenLocal()
+        maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "DualWallpaper"

@@ -1,28 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DualWallpaper</string>
-
-    <string name="select">Select</string>
-    <string name="lock_screen">Lock screen</string>
-    <string name="home_screen">Home screen</string>
-    <string name="light">Light</string>
-    <string name="dark">Dark</string>
-
-    <string name="use_current">Use current</string>
-    <string name="pick_new">Pick new one</string>
-    <string name="delete">Delete</string>
-    <string name="wallpaper_not_supported">The current wallpaper is not supported.</string>
-
-    <string name="function_mode">Function Mode</string>
-    <string name="off">Off</string>
-    <string name="wallpaper_service">Wallpaper Service</string>
-    <string name="live_wallpaper">Live Wallpaper</string>
-
-    <string name="noti_desc">Click to hide this notification</string>
-    <string name="wallpaper_and_style">Wallpaper and Style</string>
-    <string name="service_notification">Service Notification</string>
-    <string name="set_wallpaper_as">Set wallpaper as</string>
-    <string name="translations">Translations</string>
-    <string name="donate">Donate</string>
-    <string name="source_code">Source Code</string>
-
+    <!-- You can use "DualWallpaper" here. -->
+    <string name="app_name">"DualWallpaper"</string>
+    <string name="select">"Select"</string>
+    <string name="lock_screen">"Lock screen"</string>
+    <string name="home_screen">"Home screen"</string>
+    <string name="light">"Light"</string>
+    <string name="dark">"Dark"</string>
+    <string name="use_current">"Use current"</string>
+    <string name="pick_new">"Pick new one"</string>
+    <string name="delete">"Delete"</string>
+    <string name="wallpaper_not_supported">"The current wallpaper is not supported."</string>
+    <string name="function_mode">"Function Mode"</string>
+    <string name="off">"Off"</string>
+    <string name="wallpaper_service">"Wallpaper Service"</string>
+    <string name="live_wallpaper">"Live Wallpaper"</string>
+    <string name="noti_desc">"Click to hide this notification"</string>
+    <string name="wallpaper_and_style">"Wallpaper and Style"</string>
+    <string name="service_notification">"Service Notification"</string>
+    <string name="set_wallpaper_as">"Set wallpaper as"</string>
+    <string name="translations">"Translations"</string>
+    <string name="donate">"Donate"</string>
+    <string name="source_code">"Source Code"</string>
 </resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- You can use "DualWallpaper" here. -->
+    <string name="app_name">"DualWallpaper"</string>
+    <string name="select">"Auswählen"</string>
+    <string name="lock_screen">"Sperrbildschirm"</string>
+    <string name="home_screen">"Startbildschirm"</string>
+    <string name="light">"Hell"</string>
+    <string name="dark">"Dunkel"</string>
+    <string name="use_current">"Aktuellen benutzen"</string>
+    <string name="pick_new">"Neuen auswählen"</string>
+    <string name="delete">"Löschen"</string>
+    <string name="wallpaper_not_supported">"Der aktuelle Hintergrund ist nicht unterstützt."</string>
+    <string name="function_mode">"Funktionsweise"</string>
+    <string name="off">"Aus"</string>
+    <string name="wallpaper_service">"Hintergrund Service"</string>
+    <string name="live_wallpaper">"Live Hintergrund"</string>
+    <string name="noti_desc">"Klicken um die Benachrichtigung auszublenden"</string>
+    <string name="wallpaper_and_style">"Hintergrund und Stil"</string>
+    <string name="service_notification">"Service Benachrichtigung"</string>
+    <string name="set_wallpaper_as">"Hintergrund festlegen als"</string>
+    <string name="translations">"Übersetzungen"</string>
+    <string name="donate">"Spenden"</string>
+    <string name="source_code">"Quellcode"</string>
+</resources>

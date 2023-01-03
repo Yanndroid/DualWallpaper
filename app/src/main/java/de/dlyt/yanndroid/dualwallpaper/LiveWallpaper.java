@@ -17,7 +17,6 @@ public class LiveWallpaper extends WallpaperService {
 
     private WallpaperUtil wallpaperUtil;
     private DynamicThemeEngine dynamicThemeEngine;
-    private int uiMode = -1;
 
     @Override
     public Engine onCreateEngine() {
@@ -27,23 +26,21 @@ public class LiveWallpaper extends WallpaperService {
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        if (uiMode != newConfig.uiMode) {
-            wallpaperUtil.loadWallpaper(false, newConfig.uiMode != 33);
-            uiMode = newConfig.uiMode;
+        if (wallpaperUtil.updateDarkMode(newConfig)) {
+            wallpaperUtil.loadWallpaper(false);
         }
         dynamicThemeEngine.update(newConfig);
     }
 
     private class DynamicThemeEngine extends Engine {
         private final Handler handler = new Handler();
-        private boolean lightMode, portrait;
+        private boolean portrait;
         private boolean visible = true;        private final Runnable runnable = this::draw;
         public DynamicThemeEngine(Context context) {
             update(context.getResources().getConfiguration());
         }
 
         public void update(Configuration config) {
-            this.lightMode = config.uiMode != 33;
             this.portrait = config.orientation == Configuration.ORIENTATION_PORTRAIT;
             handler.post(runnable);
         }
@@ -51,7 +48,7 @@ public class LiveWallpaper extends WallpaperService {
         private void draw() {
             SurfaceHolder holder = getSurfaceHolder();
             Canvas canvas = null;
-            String wallpaperPath = wallpaperUtil.getWallpaperPath(true, lightMode);
+            String wallpaperPath = wallpaperUtil.getWallpaperPath(true);
             if (!new File(wallpaperPath).exists()) return;
             try {
                 canvas = holder.lockCanvas();

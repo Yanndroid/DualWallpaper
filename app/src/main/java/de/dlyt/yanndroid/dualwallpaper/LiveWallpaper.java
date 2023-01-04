@@ -29,19 +29,17 @@ public class LiveWallpaper extends WallpaperService {
         if (wallpaperUtil.updateDarkMode(newConfig)) {
             wallpaperUtil.loadWallpaper(false);
         }
-        dynamicThemeEngine.update(newConfig);
+        dynamicThemeEngine.update();
     }
 
     private class DynamicThemeEngine extends Engine {
         private final Handler handler = new Handler();
-        private boolean portrait;
         private boolean visible = true;        private final Runnable runnable = this::draw;
         public DynamicThemeEngine(Context context) {
-            update(context.getResources().getConfiguration());
+            update();
         }
 
-        public void update(Configuration config) {
-            this.portrait = config.orientation == Configuration.ORIENTATION_PORTRAIT;
+        public void update() {
             handler.post(runnable);
         }
 
@@ -55,8 +53,14 @@ public class LiveWallpaper extends WallpaperService {
                 Bitmap bMap = BitmapFactory.decodeFile(wallpaperPath);
                 Rect surfaceFrame = holder.getSurfaceFrame();
 
-                int cropH = !portrait ? 0 : (bMap.getWidth() - ((bMap.getHeight() / surfaceFrame.height()) * surfaceFrame.width())) / 2;
-                int cropV = portrait ? 0 : (bMap.getHeight() - ((bMap.getWidth() / surfaceFrame.width()) * surfaceFrame.height())) / 2;
+                float aspectBitmap = (float) bMap.getWidth() / (float) bMap.getHeight();
+                float aspectFrame = (float) surfaceFrame.width() / (float) surfaceFrame.height();
+                int cropH = 0, cropV = 0;
+                if (aspectBitmap > aspectFrame){
+                    cropH = (int)( (surfaceFrame.height() * aspectBitmap - surfaceFrame.width()) / 2 );
+                } else {
+                    cropV = (int)( (surfaceFrame.width() / aspectBitmap - surfaceFrame.height()) / 2 );
+                }
 
                 BitmapDrawable d = new BitmapDrawable(bMap);
                 d.setBounds(-cropH, -cropV, surfaceFrame.width() + cropH, surfaceFrame.height() + cropV);

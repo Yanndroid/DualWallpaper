@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.widget.Toast;
@@ -23,10 +24,26 @@ public class WallpaperUtil {
 
     private Context context;
     private WallpaperManager wallpaperManager;
+    
+    public boolean isDarkMode = false;
+
+    /**
+     * Update isDarkMode from configuration
+     * @return true if isDarkMode has changed
+     */
+    public boolean updateDarkMode(Configuration newConfig){
+        boolean newIsDarkMode = (newConfig.uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+        if (isDarkMode != newIsDarkMode) {
+            isDarkMode = newIsDarkMode;
+            return true;
+        }
+        return false;
+    }
 
     public WallpaperUtil(Context context) {
         this.context = context;
         this.wallpaperManager = WallpaperManager.getInstance(context);
+        updateDarkMode(context.getResources().getConfiguration());
     }
 
     public void saveCurrentWallpaper(boolean homeScreen, boolean lightMode) {
@@ -46,6 +63,9 @@ public class WallpaperUtil {
         }
     }
 
+    public void loadWallpaper(boolean homeScreen) {
+        loadWallpaper(homeScreen, !isDarkMode);
+    }
     public void loadWallpaper(boolean homeScreen, boolean lightMode) {
         try {
             InputStream inputStream = loadInputStream(new File(getWallpaperPath(homeScreen, lightMode)));
@@ -56,6 +76,9 @@ public class WallpaperUtil {
         }
     }
 
+    public String getWallpaperPath(boolean homeScreen) {
+        return getWallpaperPath(homeScreen, !isDarkMode);
+    }
     public String getWallpaperPath(boolean homeScreen, boolean lightMode) {
         return context.getFilesDir().getPath() + "/wallpaper_" + (homeScreen ? "home" : "lock") + "_" + (lightMode ? "light" : "dark") + ".jpg";
     }

@@ -14,11 +14,9 @@ import androidx.core.app.NotificationCompat;
 public class WallpaperService extends Service {
 
     private WallpaperUtil wallpaperUtil;
-    private int uiMode;
 
     @Override
     public void onCreate() {
-        uiMode = getResources().getConfiguration().uiMode;
         wallpaperUtil = new WallpaperUtil(this);
     }
 
@@ -42,15 +40,9 @@ public class WallpaperService extends Service {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         Log.e("WallpaperService", "onConfigurationChanged");
-        if (uiMode != newConfig.uiMode) {
-            if (newConfig.uiMode == 17) {
-                wallpaperUtil.loadWallpaper(true, true);
-                wallpaperUtil.loadWallpaper(false, true);
-            } else if (newConfig.uiMode == 33) {
-                wallpaperUtil.loadWallpaper(true, false);
-                wallpaperUtil.loadWallpaper(false, false);
-            }
-            uiMode = newConfig.uiMode;
+        if (wallpaperUtil.updateDarkMode(newConfig)) {
+            wallpaperUtil.loadWallpaper(true);
+            wallpaperUtil.loadWallpaper(false);
         }
     }
 

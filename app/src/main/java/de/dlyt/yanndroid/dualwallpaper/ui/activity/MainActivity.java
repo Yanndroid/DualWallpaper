@@ -8,6 +8,7 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -86,12 +87,21 @@ public class MainActivity extends AppCompatActivity {
                 .setTitle(R.string.set_wallpaper_as)
                 .setNegativeButton(dev.oneuiproject.oneui.design.R.string.oui_common_cancel, null)
                 .setItems(items, (dialog1, which) -> {
-                    try {
+                    /*try {
                         wallpaperUtil.saveFromUri(intent.getData(), types[which]);
                         adapter.notifyItemChanged(types[which].light ? 0 : 1);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
-                    }
+                    }*/
+                    Handler handler = new Handler();
+                    new Thread(() -> {
+                        try {
+                            wallpaperUtil.saveFromUri(intent.getData(), types[which]);
+                            handler.post(() -> adapter.notifyItemChanged(types[which].light ? 0 : 1));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }).start();
                 })
                 .create();
         dialog.show();
@@ -102,13 +112,23 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         //TODO convert, crop, scale
         if (resultCode == RESULT_OK && requestCode >> 2 == PICKER_REQUEST_CODE >> 2) {
-            try {
+            /*try {
                 WallpaperType type = WallpaperType.values()[requestCode - PICKER_REQUEST_CODE];
                 wallpaperUtil.saveFromUri(data.getData(), type);
                 adapter.notifyItemChanged(type.light ? 0 : 1);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-            }
+            }*/
+            Handler handler = new Handler();
+            new Thread(() -> {
+                try {
+                    WallpaperType type = WallpaperType.values()[requestCode - PICKER_REQUEST_CODE];
+                    wallpaperUtil.saveFromUri(data.getData(), type);
+                    handler.post(() -> adapter.notifyItemChanged(type.light ? 0 : 1));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }).start();
         }
     }
 

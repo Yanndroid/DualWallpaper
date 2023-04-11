@@ -71,8 +71,10 @@ public class WallpaperOptionsDialog {
     }
 
     private void optionUseCurrent() {
-        mWallpaperUtil.saveFromCurrent(mType);
-        mCallback.onDone();
+        new Thread(() -> {
+            mWallpaperUtil.saveFromCurrent(mType);
+            mCallback.onDone();
+        }).start();
     }
 
     private void optionPickNew() {
@@ -85,15 +87,15 @@ public class WallpaperOptionsDialog {
         int lastColor = Color.BLACK;
         Bitmap image = BitmapFactory.decodeFile(mWallpaperUtil.getPathForWallpaper(mType));
         if (image != null) lastColor = image.getPixel(0, 0);
-        new ColorPickerDialog(mContext, color -> {
-            mWallpaperUtil.saveFromBitmap(BitmapUtil.plainColor(DeviceUtil.getDisplaySize(mContext), color), mType);
+        new ColorPickerDialog(mContext, color -> new Thread(() -> {
+            mWallpaperUtil.saveFromBitmap(BitmapUtil.plainColor(DeviceUtil.getDisplaySize(mContext), color), mType, false, false);
             mCallback.onDone();
-        }, lastColor).show();
+        }).start(), lastColor).show();
     }
 
     private void optionGradientColor() {
         new GradientPickerDialog(mContext, (startColor, endColor) -> new Thread(() -> {
-            mWallpaperUtil.saveFromBitmap(BitmapUtil.gradientColor(DeviceUtil.getDisplaySize(mContext), startColor, endColor), mType);
+            mWallpaperUtil.saveFromBitmap(BitmapUtil.gradientColor(DeviceUtil.getDisplaySize(mContext), startColor, endColor), mType, false, true);
             mCallback.onDone();
         }).start()).show();
     }

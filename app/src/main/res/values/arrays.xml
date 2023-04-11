@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="preferences_main_entries">
-        <item>@string/off</item>
-        <item>@string/wallpaper_service</item>
-        <item>@string/live_wallpaper</item>
+    <string-array name="service_mode_entries">
+        <item>@string/trigger_device_theme</item>
+        <item>@string/trigger_time</item>
     </string-array>
-    <string-array name="preferences_main_values">
-        <item>off</item>
-        <item>wps</item>
-        <item>lwp</item>
+    <string-array name="service_mode_values">
+        <item>0</item>
+        <item>1</item>
     </string-array>
 </resources>

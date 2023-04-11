@@ -1,25 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
-    <!-- You can use "DualWallpaper" here. -->
-    <string name="app_name">"DualWallpaper"</string>
-    <string name="select">"เลือก"</string>
-    <string name="lock_screen">"หน้าจอล็อก"</string>
-    <string name="home_screen">"หน้าจอหลัก"</string>
-    <string name="light">"สว่าง"</string>
-    <string name="dark">"มืด"</string>
-    <string name="use_current">"ใช้วอลเปเปอร์ปัจจุบัน"</string>
-    <string name="pick_new">"เลือกรูปใหม่"</string>
-    <string name="delete">"ลบ"</string>
-    <string name="wallpaper_not_supported">"วอลเปเปอร์ปัจจุบันไม่สามารถใช้งานได้"</string>
-    <string name="function_mode">"รูปแบบวอลเปเปอร์"</string>
-    <string name="off">"ปิด"</string>
-    <string name="wallpaper_service">"วอลเปเปอร์ปกติ"</string>
-    <string name="live_wallpaper">"วอลเปเปอร์ภาพเคลื่อนไหว"</string>
-    <string name="noti_desc">"แตะที่นี่เพื่อซ่อนการแจ้งเตือน"</string>
-    <string name="wallpaper_and_style">"วอลเปเปอร์และสไตล์"</string>
     <string name="service_notification">"หมวดหมู่การแจ้งเตือน"</string>
+    <string name="select">"เลือก"</string>
     <string name="set_wallpaper_as">"ตั้งวอลเปเปอร์ที่"</string>
+    <string name="wallpaper_not_supported">"วอลเปเปอร์ปัจจุบันไม่สามารถใช้งานได้"</string>
+    <string name="noti_desc">"แตะที่นี่เพื่อซ่อนการแจ้งเตือน"</string>
+    <string name="wallpaper_service">"วอลเปเปอร์ปกติ"</string>
+    <string name="delete">"ลบ"</string>
+    <string name="pick_new">"เลือกรูปใหม่"</string>
+    <string name="wallpaper_and_style">"วอลเปเปอร์และสไตล์"</string>
+    <string name="s_next_day">%s วันถัดไป</string>
+    <string name="light">"สว่าง"</string>
     <string name="translations">"แปลภาษา"</string>
+    <string name="dark">"มืด"</string>
     <string name="donate">"โดเนท"</string>
+    <string name="home_screen">"หน้าจอหลัก"</string>
+    <string name="lock_screen">"หน้าจอล็อก"</string>
     <string name="source_code">"รหัสแหล่งที่มา"</string>
+    <string name="set_schedule">ตั้งค่ากำหนดการ</string>
+    <string name="use_current">"ใช้วอลเปเปอร์ปัจจุบัน"</string>
 </resources>

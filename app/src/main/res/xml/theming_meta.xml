@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ThemeMetaData FormatVersion="1.3" GuideVersion="1.4">
+    <AppMetaData Name="SeslTester" TargetApi="21" TargetPackageName="de.dlyt.yanndroid.dualwallpaper" VersionCode="1" VersionName="">
+        <Include RefName="SESL" />
+    </AppMetaData>
+</ThemeMetaData>

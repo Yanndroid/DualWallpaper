@@ -3,19 +3,17 @@
     package="de.dlyt.yanndroid.dualwallpaper">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <uses-feature
-        android:name="android.software.live_wallpaper"
-        android:required="true" />
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:supportsRtl="true"
         android:theme="@style/OneUITheme">
 
         <meta-data
@@ -30,43 +28,23 @@
             android:name="com.samsung.android.icon_container.feature_appicon"
             android:value="ADAPTIVEICON_SHADOW" />
 
-        <service
-            android:name=".LiveWallpaper"
-            android:configChanges="uiMode|orientation"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.BIND_WALLPAPER">
-            <intent-filter>
-                <action android:name="android.service.wallpaper.WallpaperService" />
-            </intent-filter>
-            <meta-data
-                android:name="android.service.wallpaper"
-                android:resource="@xml/live_wallpaper" />
-        </service>
+        <meta-data
+            android:name="theming-meta"
+            android:value="meta_998_sesl_app" />
 
-        <service
-            android:name=".WallpaperService"
-            android:enabled="true"
-            android:exported="true"
-            android:process=":ws" />
-
-        <receiver
-            android:name=".BootReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </receiver>
+        <meta-data
+            android:name="theming-meta-xml"
+            android:value="@xml/theming_meta" />
 
         <activity
             android:name=".ui.activity.MainActivity"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize"
             android:exported="true">
+
+            <meta-data
+                android:name="com.sec.android.app.launcher.icon_theme"
+                android:value="themeColor" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -83,6 +61,31 @@
         <activity
             android:name=".ui.activity.AboutActivity"
             android:exported="true" />
+
+        <service
+            android:name=".trigger.ThemeTrigger"
+            android:exported="false"
+            android:process=":ws" />
+
+        <receiver
+            android:name=".trigger.TimeTrigger"
+            android:exported="false" />
+
+        <receiver
+            android:name=".BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

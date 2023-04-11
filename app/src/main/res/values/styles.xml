@@ -4,7 +4,7 @@
     <style name="PreviewBadge">
         <item name="android:textSize">10dp</item>
         <item name="android:textColor">#fffafafa</item>
-        <item name="android:background">@drawable/wallpaper_preview_badge_bg</item>
+        <item name="android:background">@drawable/preview_badge_bg</item>
         <item name="android:fontFamily">sec-roboto-light</item>
         <item name="android:paddingStart">7dp</item>
         <item name="android:paddingEnd">7dp</item>

@@ -1,5 +1,7 @@
 package de.dlyt.yanndroid.dualwallpaper.ui.activity;
 
+import static de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil.WallpaperType;
+
 import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -10,24 +12,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentManager;
-import androidx.preference.PreferenceManager;
 
 import java.io.FileNotFoundException;
 
+import de.dlyt.yanndroid.dualwallpaper.Preferences;
 import de.dlyt.yanndroid.dualwallpaper.R;
-import de.dlyt.yanndroid.dualwallpaper.WallpaperService;
-import de.dlyt.yanndroid.dualwallpaper.WallpaperUtil;
+import de.dlyt.yanndroid.dualwallpaper.utils.TriggerUtil;
+import de.dlyt.yanndroid.dualwallpaper.trigger.ThemeTrigger;
+import de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil;
 import de.dlyt.yanndroid.dualwallpaper.ui.adapter.ViewPagerAdapter;
 import de.dlyt.yanndroid.dualwallpaper.ui.fragment.PreferencesFragment;
 import dev.oneuiproject.oneui.layout.ToolbarLayout;
+import dev.oneuiproject.oneui.utils.ActivityUtils;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final int PICKER_REQUEST_CODE = 5000;
+
     private WallpaperUtil wallpaperUtil;
     private ViewPagerAdapter adapter;
 
@@ -39,15 +45,21 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ViewPagerAdapter(this, wallpaperUtil);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
         }
-        NotificationManagerCompat.from(this).createNotificationChannel(new NotificationChannel("4000", getString(R.string.wallpaper_service), NotificationManager.IMPORTANCE_LOW));
+        NotificationManagerCompat.from(this).createNotificationChannel(new NotificationChannel(ThemeTrigger.CHANNEL_ID, getString(R.string.wallpaper_service), NotificationManager.IMPORTANCE_MIN));
 
         ToolbarLayout toolbarLayout = findViewById(R.id.toolbarLayout);
         toolbarLayout.setNavigationButtonAsBack();
 
-        if (PreferenceManager.getDefaultSharedPreferences(this).getString("main_pref", "off").equals("wps"))
-            startForegroundService(new Intent(MainActivity.this, WallpaperService.class));
+        Preferences preferences = new Preferences(this);
+        if (preferences.isEnabled()) {
+            if (preferences.changeWithTheme()) {
+                TriggerUtil.startThemeTrigger(this);
+            } else {
+                TriggerUtil.startTimeTrigger(this);
+            }
+        }
 
         PreferencesFragment fragment = new PreferencesFragment();
         fragment.initFields(adapter, wallpaperUtil);
@@ -61,17 +73,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setWallpaperIntent(Intent intent) {
-        CharSequence[] items = new CharSequence[4];
-        items[0] = getString(R.string.light) + " " + getString(R.string.lock_screen);
-        items[1] = getString(R.string.light) + " " + getString(R.string.home_screen);
-        items[2] = getString(R.string.dark) + " " + getString(R.string.lock_screen);
-        items[3] = getString(R.string.dark) + " " + getString(R.string.home_screen);
+        WallpaperType[] types = WallpaperType.values();
+        CharSequence[] items = new CharSequence[types.length];
+        for (int i = 0; i < types.length; i++) {
+            WallpaperType type = types[i];
+            items[i] = getString(R.string.type_name_separator,
+                    type.home ? getString(R.string.home_screen) : getString(R.string.lock_screen),
+                    type.light ? getString(R.string.light) : getString(R.string.dark));
+        }
+
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.set_wallpaper_as)
                 .setItems(items, (dialog1, which) -> {
                     try {
-                        wallpaperUtil.saveUriWallpaper(intent.getData(), (which & 1) == 1, ((which >> 1) & 1) == 0);
-                        adapter.notifyItemChanged(((which >> 1) & 1));
+                        wallpaperUtil.saveUriWallpaper(intent.getData(), types[which]);
+                        adapter.notifyItemChanged(types[which].light ? 0 : 1);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -81,12 +97,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && (requestCode >> 3) == 625) {
+        if (resultCode == RESULT_OK && requestCode >> 2 == PICKER_REQUEST_CODE >> 2) {
             try {
-                wallpaperUtil.saveUriWallpaper(data.getData(), (((requestCode >> 1) & 1) == 1), ((requestCode & 1) == 1));
-                adapter.notifyItemChanged(1 - (requestCode & 1));
+                WallpaperType type = WallpaperType.values()[requestCode - PICKER_REQUEST_CODE];
+                wallpaperUtil.saveUriWallpaper(data.getData(), type);
+                adapter.notifyItemChanged(type.light ? 0 : 1);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -95,14 +112,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        getMenuInflater().inflate(dev.oneuiproject.oneui.R.menu.app_info_menu, menu);
+        getMenuInflater().inflate(dev.oneuiproject.oneui.design.R.menu.app_info_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == dev.oneuiproject.oneui.R.id.menu_app_info) {
-            startActivity(new Intent(this, AboutActivity.class));
+        if (item.getItemId() == dev.oneuiproject.oneui.design.R.id.menu_app_info) {
+            ActivityUtils.startPopOverActivity(this,
+                    new Intent(this, AboutActivity.class),
+                    null,
+                    ActivityUtils.POP_OVER_POSITION_RIGHT | ActivityUtils.POP_OVER_POSITION_TOP);
             return true;
         }
         return false;

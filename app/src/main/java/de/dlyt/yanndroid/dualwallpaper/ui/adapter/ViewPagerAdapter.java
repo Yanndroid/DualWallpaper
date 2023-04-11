@@ -20,7 +20,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import de.dlyt.yanndroid.dualwallpaper.R;
-import de.dlyt.yanndroid.dualwallpaper.WallpaperUtil;
+import de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil;
+import de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil.WallpaperType;
 import de.dlyt.yanndroid.dualwallpaper.ui.activity.MainActivity;
 
 public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.ViewHolder> {
@@ -43,18 +44,27 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
         boolean isLightModeTab = position == 0;
         setImageViewSize(holder.lock_screen_preview);
         setImageViewSize(holder.home_screen_preview);
-        holder.lock_screen_preview.setOnClickListener(v -> wallpaperOptionsDialog((ImageView) v, false, isLightModeTab));
-        holder.home_screen_preview.setOnClickListener(v -> wallpaperOptionsDialog((ImageView) v, true, isLightModeTab));
-
-        updateImages(holder.lock_screen_preview, false, isLightModeTab);
-        updateImages(holder.home_screen_preview, true, isLightModeTab);
+        if (isLightModeTab) {
+            holder.lock_screen_preview.setOnClickListener(v -> wallpaperOptionsDialog((ImageView) v, WallpaperType.LOCK_LIGHT));
+            holder.home_screen_preview.setOnClickListener(v -> wallpaperOptionsDialog((ImageView) v, WallpaperType.HOME_LIGHT));
+            updateImages(holder.lock_screen_preview, WallpaperType.LOCK_LIGHT);
+            updateImages(holder.home_screen_preview, WallpaperType.HOME_LIGHT);
+        } else {
+            holder.lock_screen_preview.setOnClickListener(v -> wallpaperOptionsDialog((ImageView) v, WallpaperType.LOCK_DARK));
+            holder.home_screen_preview.setOnClickListener(v -> wallpaperOptionsDialog((ImageView) v, WallpaperType.HOME_DARK));
+            updateImages(holder.lock_screen_preview, WallpaperType.LOCK_DARK);
+            updateImages(holder.home_screen_preview, WallpaperType.HOME_DARK);
+        }
     }
 
-    private void updateImages(ImageView imageView, boolean homeScreen, boolean lightMode) {
+    private void updateImages(ImageView imageView, WallpaperType type) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
-            Bitmap image = BitmapFactory.decodeFile(wallpaperUtil.getWallpaperPath(homeScreen, lightMode));
-            if (image == null) return;
+            Bitmap image = BitmapFactory.decodeFile(wallpaperUtil.getPathForWallpaper(type));
+            if (image == null) {
+                imageView.post(() -> imageView.setImageBitmap(null));
+                return;
+            }
             double scale = Math.max((double) imageView.getWidth() / (double) image.getWidth(), (double) imageView.getHeight() / (double) image.getHeight());
             Bitmap scaledImage = Bitmap.createScaledBitmap(image, (int) (image.getWidth() * scale), (int) (image.getHeight() * scale), true);
             imageView.post(() -> imageView.setImageBitmap(scaledImage));
@@ -82,8 +92,9 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
         return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.viewpager_page_layout, parent, false));
     }
 
-    private void wallpaperOptionsDialog(ImageView imageView, boolean homeScreen, boolean lightMode) {
-        File wallpaperFile = new File(wallpaperUtil.getWallpaperPath(homeScreen, lightMode));
+    private void wallpaperOptionsDialog(ImageView imageView, WallpaperType type) {
+        File wallpaperFile = new File(wallpaperUtil.getPathForWallpaper(type));
+
         CharSequence[] dialogOptions = wallpaperFile.exists() ?
                 new String[]{context.getString(R.string.use_current), context.getString(R.string.pick_new), context.getString(R.string.delete)} :
                 new String[]{context.getString(R.string.use_current), context.getString(R.string.pick_new)};
@@ -92,17 +103,18 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
                 .setItems(dialogOptions, (dialog, which) -> {
                     switch (which) {
                         case 0:
-                            wallpaperUtil.saveCurrentWallpaper(homeScreen, lightMode);
-                            updateImages(imageView, homeScreen, lightMode);
+                            wallpaperUtil.saveCurrentWallpaper(type);
+                            updateImages(imageView, type);
                             break;
                         case 1:
                             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                             intent.setType("image/*");
-                            ((MainActivity) context).startActivityForResult(intent, 5000 + (homeScreen ? 1 << 1 : 0) + (lightMode ? 1 : 0));
+                            ((MainActivity) context).startActivityForResult(intent, MainActivity.PICKER_REQUEST_CODE + type.index);
                             break;
                         case 2:
-                            wallpaperFile.delete();
-                            updateImages(imageView, homeScreen, lightMode);
+                            if (wallpaperFile.delete()) {
+                                updateImages(imageView, type);
+                            }
                             break;
                     }
                 }).create();

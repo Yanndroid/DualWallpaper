@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <string name="service_notification">"Hizmet bildirimi"</string>
+    <string name="select">"Seç"</string>
+    <string name="set_wallpaper_as">"Duvar kağıdı ayarla"</string>
+    <string name="wallpaper_not_supported">"Seçili duvar kağıdı desteklenmiyor"</string>
+    <string name="noti_desc">"Bildirimi kapatmak için dokunun"</string>
+    <string name="wallpaper_service">"Duvar kağıdı servisi"</string>
+    <string name="delete">"Sil"</string>
+    <string name="pick_new">"Yeni bir tane"</string>
+    <string name="wallpaper_and_style">"Duvar kağıdı ve tarzı"</string>
+    <string name="s_next_day">%s sonraki gün</string>
+    <string name="light">"Aydınlık"</string>
+    <string name="translations">"Tercümeler"</string>
+    <string name="dark">"Karanlık"</string>
+    <string name="donate">"Destekleyin"</string>
+    <string name="home_screen">"Ana ekran"</string>
+    <string name="lock_screen">"Kilit ekranı"</string>
+    <string name="source_code">"Kaynak kodu"</string>
+    <string name="set_schedule">Program ayarla</string>
+    <string name="use_current">"Mevcut kullanın"</string>
+</resources>

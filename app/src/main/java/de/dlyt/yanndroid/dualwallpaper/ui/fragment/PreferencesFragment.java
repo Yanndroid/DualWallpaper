@@ -1,7 +1,5 @@
 package de.dlyt.yanndroid.dualwallpaper.ui.fragment;
 
-import android.app.WallpaperManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -9,6 +7,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.format.DateFormat;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -21,26 +20,39 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import de.dlyt.yanndroid.dualwallpaper.LiveWallpaper;
+import java.util.Calendar;
+import java.util.Date;
+
+import de.dlyt.yanndroid.dualwallpaper.Preferences;
 import de.dlyt.yanndroid.dualwallpaper.R;
-import de.dlyt.yanndroid.dualwallpaper.WallpaperService;
-import de.dlyt.yanndroid.dualwallpaper.WallpaperUtil;
+import de.dlyt.yanndroid.dualwallpaper.trigger.ThemeTrigger;
+import de.dlyt.yanndroid.dualwallpaper.utils.TriggerUtil;
+import de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil;
 import de.dlyt.yanndroid.dualwallpaper.ui.adapter.ViewPagerAdapter;
+import dev.oneuiproject.oneui.dialog.StartEndTimePickerDialog;
 import dev.oneuiproject.oneui.preference.LayoutPreference;
+import dev.oneuiproject.oneui.preference.SwitchBarPreference;
 import dev.oneuiproject.oneui.preference.internal.PreferenceRelatedCard;
 import dev.oneuiproject.oneui.utils.PreferenceUtils;
 
-public class PreferencesFragment extends PreferenceFragmentCompat
-        implements Preference.OnPreferenceChangeListener {
+public class PreferencesFragment extends PreferenceFragmentCompat {
+
     private Context mContext;
-    private WallpaperUtil wallpaperUtil;
-    private ViewPagerAdapter adapter;
+    private Preferences mPreferences;
+    private WallpaperUtil mWallpaperUtil;
+    private ViewPagerAdapter mAdapter;
     private PreferenceRelatedCard mRelativeLinkCard;
+
+    public void initFields(ViewPagerAdapter adapter, WallpaperUtil wallpaperUtil) {
+        this.mAdapter = adapter;
+        this.mWallpaperUtil = wallpaperUtil;
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mContext = context;
+        mPreferences = new Preferences(mContext);
     }
 
     @Override
@@ -52,39 +64,81 @@ public class PreferencesFragment extends PreferenceFragmentCompat
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
-        LayoutPreference layoutPreference = findPreference("preview_pref");
-        if (adapter != null && wallpaperUtil != null) {
-            ViewPager2 viewPager = layoutPreference.findViewById(R.id.viewPager);
-            viewPager.seslGetListView().setNestedScrollingEnabled(false);
-            viewPager.setAdapter(adapter);
+        SwitchBarPreference switchBarPreference = findPreference("service_enabled");
+        LayoutPreference previewPreference = findPreference("preview");
+        DropDownPreference modePreference = findPreference("service_mode");
+        Preference schedulePreference = findPreference("schedule");
 
-            TabLayout tabLayout = layoutPreference.findViewById(R.id.tabLayout);
+        switchBarPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            if ((boolean) newValue) {
+                if (mPreferences.changeWithTheme()) {
+                    TriggerUtil.startThemeTrigger(mContext);
+                } else {
+                    TriggerUtil.startTimeTrigger(mContext);
+                }
+            } else {
+                TriggerUtil.stopAll(mContext);
+            }
+            return true;
+        });
+
+        if (mAdapter != null && mWallpaperUtil != null) {
+            ViewPager2 viewPager = previewPreference.findViewById(R.id.viewPager);
+            viewPager.seslGetListView().setNestedScrollingEnabled(false);
+            viewPager.setAdapter(mAdapter);
+
+            TabLayout tabLayout = previewPreference.findViewById(R.id.tabLayout);
             tabLayout.seslSetSubTabStyle();
 
             new TabLayoutMediator(tabLayout, viewPager, (tab, position)
                     -> tab.setText(((ViewPagerAdapter) viewPager.getAdapter()).getTitle(position))).attach();
         } else {
-            getPreferenceScreen().removePreference(layoutPreference);
+            getPreferenceScreen().removePreference(previewPreference);
         }
 
-        DropDownPreference main_pref = findPreference("main_pref");
-        main_pref.seslSetSummaryColor(getColoredSummaryColor());
-        main_pref.setOnPreferenceChangeListener(this);
+        modePreference.seslSetSummaryColor(getColoredSummaryColor());
+        modePreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            schedulePreference.setVisible(newValue.equals("1"));
+            if (mPreferences.isEnabled()) {
+                if (newValue.equals("0")) {
+                    TriggerUtil.startThemeTrigger(mContext);
+                } else {
+                    TriggerUtil.startTimeTrigger(mContext);
+                }
+            }
+            return true;
+        });
+
+        schedulePreference.setVisible(!mPreferences.changeWithTheme());
+        schedulePreference.seslSetSummaryColor(getColoredSummaryColor());
+        schedulePreference.setSummary(getScheduleSummary(mContext, mPreferences.getScheduleStart(), mPreferences.getScheduleEnd()));
+        schedulePreference.setOnPreferenceClickListener(preference -> {
+            new StartEndTimePickerDialog(mContext,
+                    mPreferences.getScheduleStart(),
+                    mPreferences.getScheduleEnd(),
+                    DateFormat.is24HourFormat(mContext),
+                    (startTime, endTime) -> {
+                        schedulePreference.setSummary(getScheduleSummary(mContext, startTime, endTime));
+                        mPreferences.setScheduleTime(startTime, endTime);
+                        if (mPreferences.isEnabled() && !mPreferences.changeWithTheme())
+                            TriggerUtil.startTimeTrigger(mContext);
+                    }).show();
+            return false;
+        });
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getView().setBackgroundColor(mContext.getColor(dev.oneuiproject.oneui.R.color.oui_background_color));
+        getView().setBackgroundColor(mContext.getColor(dev.oneuiproject.oneui.design.R.color.oui_background_color));
         getListView().seslSetLastRoundedCorner(false);
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (adapter != null) {
-            adapter.notifyItemRangeChanged(0, 2);
-        }
+        if (mAdapter != null) mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -93,41 +147,32 @@ public class PreferencesFragment extends PreferenceFragmentCompat
         super.onResume();
     }
 
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference.getKey().equals("main_pref")) {
-            switch ((String) newValue) {
-                case "wps":
-                    mContext.startForegroundService(new Intent(mContext, WallpaperService.class));
-                    break;
-                case "lwp":
-                    mContext.stopService(new Intent(mContext, WallpaperService.class));
-                    Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
-                    intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, new ComponentName(mContext, LiveWallpaper.class));
-                    startActivity(intent);
-                    break;
-                case "off":
-                    mContext.stopService(new Intent(mContext, WallpaperService.class));
-                    boolean lightMode = getResources().getConfiguration().uiMode != 33;
-                    if (wallpaperUtil != null) {
-                        wallpaperUtil.loadWallpaper(true, lightMode);
-                        wallpaperUtil.loadWallpaper(false, lightMode);
-                    }
-                    break;
-            }
-            return true;
+    private String getScheduleSummary(Context context, int startTime, int endTime) {
+        int startHour = startTime / 60;
+        int startMinute = startTime % 60;
+        int endHour = endTime / 60;
+        int endMinute = endTime % 60;
+        StringBuilder sb = new StringBuilder();
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(DateFormat.is24HourFormat(context) ? 11 : 10, startHour);
+        calendar.set(12, startMinute);
+        sb.append(DateFormat.getTimeFormat(context).format(new Date(calendar.getTimeInMillis())));
+        sb.append(" - ");
+        calendar.clear();
+        calendar.set(DateFormat.is24HourFormat(context) ? 11 : 10, endHour);
+        calendar.set(12, endMinute);
+        if (startTime >= endTime) {
+            sb.append(context.getResources().getString(R.string.s_next_day, DateFormat.getTimeFormat(context).format(new Date(calendar.getTimeInMillis()))));
+        } else {
+            sb.append(DateFormat.getTimeFormat(context).format(new Date(calendar.getTimeInMillis())));
         }
-        return false;
-    }
-
-    public void initFields(ViewPagerAdapter adapter, WallpaperUtil wallpaperUtil) {
-        this.adapter = adapter;
-        this.wallpaperUtil = wallpaperUtil;
+        return sb.toString();
     }
 
     private ColorStateList getColoredSummaryColor() {
         TypedValue colorPrimaryDark = new TypedValue();
-        mContext.getTheme().resolveAttribute(dev.oneuiproject.oneui.R.attr.colorPrimaryDark, colorPrimaryDark, true);
+        mContext.getTheme().resolveAttribute(dev.oneuiproject.oneui.design.R.attr.colorPrimaryDark, colorPrimaryDark, true);
         int[][] states = new int[][]{
                 new int[]{android.R.attr.state_enabled},
                 new int[]{-android.R.attr.state_enabled}
@@ -148,8 +193,8 @@ public class PreferencesFragment extends PreferenceFragmentCompat
     private void setRelativeLinkCard() {
         if (mRelativeLinkCard == null) {
             mRelativeLinkCard = PreferenceUtils.createRelatedCard(mContext);
-            mRelativeLinkCard.addButton(mContext.getString(R.string.service_notification), v -> startActivity(new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, mContext.getPackageName()).putExtra(Settings.EXTRA_CHANNEL_ID, "4000")));
-            mRelativeLinkCard.addButton(mContext.getString(R.string.live_wallpaper), v -> startActivity(new Intent(WallpaperManager.ACTION_LIVE_WALLPAPER_CHOOSER)));
+            mRelativeLinkCard.addButton(mContext.getString(R.string.service_notification), v -> startActivity(new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, mContext.getPackageName()).putExtra(Settings.EXTRA_CHANNEL_ID, ThemeTrigger.CHANNEL_ID)));
+            mRelativeLinkCard.addButton(mContext.getString(R.string.display_settings), v -> startActivity(new Intent(Settings.ACTION_DISPLAY_SETTINGS)));
 
             Intent samsungWallpaperIntent = new Intent("com.samsung.intent.action.WALLPAPER_SETTING");
             if (samsungWallpaperIntent.resolveActivity(mContext.getPackageManager()) != null) {

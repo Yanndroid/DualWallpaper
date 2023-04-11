@@ -7,11 +7,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -83,20 +80,5 @@ public class AboutActivity extends AppCompatActivity implements AppInfoLayout.On
     @Override
     public void onRetryClicked(View v) {
         checkForUpdate();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        getMenuInflater().inflate(dev.oneuiproject.oneui.R.menu.app_info_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == dev.oneuiproject.oneui.R.id.menu_app_info) {
-            appInfoLayout.openSettingsAppInfo();
-            return true;
-        }
-        return false;
     }
 }

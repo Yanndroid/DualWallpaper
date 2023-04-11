@@ -8,7 +8,6 @@ import android.graphics.Point;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +17,7 @@ import java.io.File;
 
 import de.dlyt.yanndroid.dualwallpaper.R;
 import de.dlyt.yanndroid.dualwallpaper.ui.dialog.WallpaperOptionsDialog;
+import de.dlyt.yanndroid.dualwallpaper.utils.DeviceUtil;
 import de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil;
 import de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil.WallpaperType;
 
@@ -96,8 +96,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     }
 
     private void setImageViewSize(ImageView imageView) {
-        Point size = new Point();
-        ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRealSize(size);
+        Point size = DeviceUtil.getDisplaySize(mContext);
         ViewGroup.LayoutParams lph = imageView.getLayoutParams();
         lph.width = (int) (size.x / 2.8);
         lph.height = (int) (size.y / 2.8);

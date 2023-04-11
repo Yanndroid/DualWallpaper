@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //TODO convert, crop, scale
         if (resultCode == RESULT_OK && requestCode >> 2 == PICKER_REQUEST_CODE >> 2) {
             try {
                 WallpaperType type = WallpaperType.values()[requestCode - PICKER_REQUEST_CODE];

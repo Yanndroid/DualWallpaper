@@ -6,14 +6,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Point;
-import android.view.WindowManager;
 
 import androidx.appcompat.app.AlertDialog;
 
 import de.dlyt.yanndroid.dualwallpaper.R;
 import de.dlyt.yanndroid.dualwallpaper.ui.activity.MainActivity;
 import de.dlyt.yanndroid.dualwallpaper.utils.BitmapUtil;
+import de.dlyt.yanndroid.dualwallpaper.utils.DeviceUtil;
 import de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil;
 import dev.oneuiproject.oneui.utils.DialogUtils;
 
@@ -30,12 +29,6 @@ public class WallpaperOptionsDialog {
     private final WallpaperUtil.WallpaperType mType;
     private final AlertDialog mDialog;
     private final Callback mCallback;
-
-    public static Point getDisplaySize(Context context) {
-        Point size = new Point();
-        ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRealSize(size);
-        return size;
-    }
 
     public WallpaperOptionsDialog(Context context, WallpaperUtil wallpaperUtil, WallpaperUtil.WallpaperType type, boolean deleteButton, Callback callback) {
         this.mContext = context;
@@ -83,7 +76,6 @@ public class WallpaperOptionsDialog {
     }
 
     private void optionPickNew() {
-        //TODO crop stuff (in MainActivity)
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         ((MainActivity) mContext).startActivityForResult(intent, MainActivity.PICKER_REQUEST_CODE + mType.index);
@@ -94,14 +86,14 @@ public class WallpaperOptionsDialog {
         Bitmap image = BitmapFactory.decodeFile(mWallpaperUtil.getPathForWallpaper(mType));
         if (image != null) lastColor = image.getPixel(0, 0);
         new ColorPickerDialog(mContext, color -> {
-            mWallpaperUtil.saveFromBitmap(mType, BitmapUtil.plainColor(getDisplaySize(mContext), color));
+            mWallpaperUtil.saveFromBitmap(BitmapUtil.plainColor(DeviceUtil.getDisplaySize(mContext), color), mType);
             mCallback.onDone();
         }, lastColor).show();
     }
 
     private void optionGradientColor() {
         new GradientPickerDialog(mContext, (startColor, endColor) -> new Thread(() -> {
-            mWallpaperUtil.saveFromBitmap(mType, BitmapUtil.gradientColor(getDisplaySize(mContext), startColor, endColor));
+            mWallpaperUtil.saveFromBitmap(BitmapUtil.gradientColor(DeviceUtil.getDisplaySize(mContext), startColor, endColor), mType);
             mCallback.onDone();
         }).start()).show();
     }

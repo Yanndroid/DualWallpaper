@@ -7,7 +7,6 @@
     <string name="noti_desc">"Klicken um die Benachrichtigung auszublenden"</string>
     <string name="wallpaper_service">"Hintergrund Service"</string>
     <string name="delete">"Löschen"</string>
-    <string name="pick_new">"Neuen auswählen"</string>
     <string name="wallpaper_and_style">"Hintergrund und Stil"</string>
     <string name="s_next_day">%s am nächsten Tag</string>
     <string name="light">"Hell"</string>

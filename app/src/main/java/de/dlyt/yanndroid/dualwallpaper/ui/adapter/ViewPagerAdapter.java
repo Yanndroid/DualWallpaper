@@ -1,9 +1,9 @@
 package de.dlyt.yanndroid.dualwallpaper.ui.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,31 +12,50 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import de.dlyt.yanndroid.dualwallpaper.R;
+import de.dlyt.yanndroid.dualwallpaper.ui.dialog.WallpaperOptionsDialog;
 import de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil;
 import de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil.WallpaperType;
-import de.dlyt.yanndroid.dualwallpaper.ui.activity.MainActivity;
 
 public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.ViewHolder> {
-    private Context context;
-    private WallpaperUtil wallpaperUtil;
+    private Context mContext;
+    private WallpaperUtil mWallpaperUtil;
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView lock_screen_preview;
+        ImageView home_screen_preview;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            lock_screen_preview = itemView.findViewById(R.id.lock_screen_preview);
+            home_screen_preview = itemView.findViewById(R.id.home_screen_preview);
+        }
+    }
 
     public ViewPagerAdapter(Context context, WallpaperUtil wallpaperUtil) {
         super();
-        this.context = context;
-        this.wallpaperUtil = wallpaperUtil;
+        this.mContext = context;
+        this.mWallpaperUtil = wallpaperUtil;
     }
 
     public String getTitle(int position) {
         int[] stringRes = {R.string.light, R.string.dark};
-        return context.getString(stringRes[position]);
+        return mContext.getString(stringRes[position]);
+    }
+
+    @Override
+    public int getItemCount() {
+        return 2;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.viewpager_page_layout, parent, false));
     }
 
     @Override
@@ -58,77 +77,46 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     }
 
     private void updateImages(ImageView imageView, WallpaperType type) {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            Bitmap image = BitmapFactory.decodeFile(wallpaperUtil.getPathForWallpaper(type));
+        new Thread(() -> {
+            Bitmap image = BitmapFactory.decodeFile(mWallpaperUtil.getPathForWallpaper(type));
             if (image == null) {
-                imageView.post(() -> imageView.setImageBitmap(null));
-                return;
+                imageView.post(() -> {
+                    imageView.setBackgroundColor(Color.TRANSPARENT);
+                    imageView.setImageBitmap(null);
+                });
+            } else {
+                double scale = Math.max((double) imageView.getWidth() / (double) image.getWidth(), (double) imageView.getHeight() / (double) image.getHeight());
+                Bitmap scaledImage = Bitmap.createScaledBitmap(image, (int) (image.getWidth() * scale), (int) (image.getHeight() * scale), true);
+                imageView.post(() -> {
+                    imageView.setImageBitmap(scaledImage);
+                    imageView.setBackgroundColor(Color.BLACK);
+                });
             }
-            double scale = Math.max((double) imageView.getWidth() / (double) image.getWidth(), (double) imageView.getHeight() / (double) image.getHeight());
-            Bitmap scaledImage = Bitmap.createScaledBitmap(image, (int) (image.getWidth() * scale), (int) (image.getHeight() * scale), true);
-            imageView.post(() -> imageView.setImageBitmap(scaledImage));
-        });
-        executor.shutdown();
+        }).start();
     }
 
     private void setImageViewSize(ImageView imageView) {
         Point size = new Point();
-        ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRealSize(size);
-
+        ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRealSize(size);
         ViewGroup.LayoutParams lph = imageView.getLayoutParams();
         lph.width = (int) (size.x / 2.8);
         lph.height = (int) (size.y / 2.8);
     }
 
-    @Override
-    public int getItemCount() {
-        return 2;
-    }
-
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.viewpager_page_layout, parent, false));
-    }
-
     private void wallpaperOptionsDialog(ImageView imageView, WallpaperType type) {
-        File wallpaperFile = new File(wallpaperUtil.getPathForWallpaper(type));
+        File wallpaperFile = new File(mWallpaperUtil.getPathForWallpaper(type));
 
-        CharSequence[] dialogOptions = wallpaperFile.exists() ?
-                new String[]{context.getString(R.string.use_current), context.getString(R.string.pick_new), context.getString(R.string.delete)} :
-                new String[]{context.getString(R.string.use_current), context.getString(R.string.pick_new)};
+        new WallpaperOptionsDialog(mContext, mWallpaperUtil, type, wallpaperFile.exists(), new WallpaperOptionsDialog.Callback() {
+            @Override
+            public void onDone() {
+                updateImages(imageView, type);
+            }
 
-        AlertDialog alertDialog = new AlertDialog.Builder(context)
-                .setItems(dialogOptions, (dialog, which) -> {
-                    switch (which) {
-                        case 0:
-                            wallpaperUtil.saveCurrentWallpaper(type);
-                            updateImages(imageView, type);
-                            break;
-                        case 1:
-                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                            intent.setType("image/*");
-                            ((MainActivity) context).startActivityForResult(intent, MainActivity.PICKER_REQUEST_CODE + type.index);
-                            break;
-                        case 2:
-                            if (wallpaperFile.delete()) {
-                                updateImages(imageView, type);
-                            }
-                            break;
-                    }
-                }).create();
-        alertDialog.show();
+            @Override
+            public void onDelete() {
+                if (wallpaperFile.delete()) updateImages(imageView, type);
+            }
+        }).show();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView lock_screen_preview;
-        ImageView home_screen_preview;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            lock_screen_preview = itemView.findViewById(R.id.lock_screen_preview);
-            home_screen_preview = itemView.findViewById(R.id.home_screen_preview);
-        }
-    }
 }

@@ -7,7 +7,6 @@
     <string name="noti_desc">"Нажмите, чтобы скрыть это уведомление"</string>
     <string name="wallpaper_service">"Сервис обоев"</string>
     <string name="delete">"Удалить"</string>
-    <string name="pick_new">"Выбрать новый"</string>
     <string name="wallpaper_and_style">"Обои и стиль"</string>
     <string name="s_next_day">%s на следующий день</string>
     <string name="light">"Светлый"</string>

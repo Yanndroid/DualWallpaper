@@ -22,11 +22,11 @@ import java.io.FileNotFoundException;
 
 import de.dlyt.yanndroid.dualwallpaper.Preferences;
 import de.dlyt.yanndroid.dualwallpaper.R;
-import de.dlyt.yanndroid.dualwallpaper.utils.TriggerUtil;
 import de.dlyt.yanndroid.dualwallpaper.trigger.ThemeTrigger;
-import de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil;
 import de.dlyt.yanndroid.dualwallpaper.ui.adapter.ViewPagerAdapter;
 import de.dlyt.yanndroid.dualwallpaper.ui.fragment.PreferencesFragment;
+import de.dlyt.yanndroid.dualwallpaper.utils.TriggerUtil;
+import de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil;
 import dev.oneuiproject.oneui.layout.ToolbarLayout;
 import dev.oneuiproject.oneui.utils.ActivityUtils;
 
@@ -84,9 +84,10 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.set_wallpaper_as)
+                .setNegativeButton(dev.oneuiproject.oneui.design.R.string.oui_common_cancel, null)
                 .setItems(items, (dialog1, which) -> {
                     try {
-                        wallpaperUtil.saveUriWallpaper(intent.getData(), types[which]);
+                        wallpaperUtil.saveFromUri(intent.getData(), types[which]);
                         adapter.notifyItemChanged(types[which].light ? 0 : 1);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode >> 2 == PICKER_REQUEST_CODE >> 2) {
             try {
                 WallpaperType type = WallpaperType.values()[requestCode - PICKER_REQUEST_CODE];
-                wallpaperUtil.saveUriWallpaper(data.getData(), type);
+                wallpaperUtil.saveFromUri(data.getData(), type);
                 adapter.notifyItemChanged(type.light ? 0 : 1);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

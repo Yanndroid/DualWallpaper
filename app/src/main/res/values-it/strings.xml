@@ -7,7 +7,6 @@
     <string name="noti_desc">"Tocca per nascondere la notifica."</string>
     <string name="wallpaper_service">"Gestito dall'applicazione"</string>
     <string name="delete">"Elimina"</string>
-    <string name="pick_new">"Galleria"</string>
     <string name="wallpaper_and_style">"Sfondo e stile"</string>
     <string name="s_next_day">Giorno successivo %s</string>
     <string name="light">"Giorno"</string>

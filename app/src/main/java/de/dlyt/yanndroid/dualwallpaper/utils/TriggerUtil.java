@@ -14,7 +14,7 @@ import de.dlyt.yanndroid.dualwallpaper.trigger.TimeTrigger;
 public class TriggerUtil {
 
     public static void startThemeTrigger(Context context) {
-        stopAll(context);
+        stopTimeTrigger(context);
 
         context.startForegroundService(new Intent(context, ThemeTrigger.class));
     }
@@ -37,8 +37,15 @@ public class TriggerUtil {
     }
 
     public static void stopAll(Context context) {
-        context.stopService(new Intent(context, ThemeTrigger.class));
+        stopThemeTrigger(context);
+        stopTimeTrigger(context);
+    }
 
+    private static void stopThemeTrigger(Context context) {
+        context.stopService(new Intent(context, ThemeTrigger.class));
+    }
+
+    private static void stopTimeTrigger(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(getPendingIntent(context, true));
         alarmManager.cancel(getPendingIntent(context, false));

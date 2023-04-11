@@ -7,7 +7,6 @@
     <string name="noti_desc">"แตะที่นี่เพื่อซ่อนการแจ้งเตือน"</string>
     <string name="wallpaper_service">"วอลเปเปอร์ปกติ"</string>
     <string name="delete">"ลบ"</string>
-    <string name="pick_new">"เลือกรูปใหม่"</string>
     <string name="wallpaper_and_style">"วอลเปเปอร์และสไตล์"</string>
     <string name="s_next_day">%s วันถัดไป</string>
     <string name="light">"สว่าง"</string>

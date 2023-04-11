@@ -5,6 +5,7 @@ import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.widget.Toast;
@@ -71,7 +72,7 @@ public class WallpaperUtil {
         }
     }
 
-    public void saveCurrentWallpaper(WallpaperType type) {
+    public void saveFromCurrent(WallpaperType type) {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             ParcelFileDescriptor fileDescriptor = wallpaperManager.getWallpaperFile(type.home ? WallpaperManager.FLAG_SYSTEM : WallpaperManager.FLAG_LOCK);
             if (fileDescriptor == null) {
@@ -82,26 +83,29 @@ public class WallpaperUtil {
         }
     }
 
-    public void saveUriWallpaper(Uri wallpaperUri, WallpaperType type) throws FileNotFoundException {
+    public void saveFromUri(Uri wallpaperUri, WallpaperType type) throws FileNotFoundException {
         saveToFile(context.getContentResolver().openInputStream(wallpaperUri), new File(getPathForWallpaper(type)));
+        onFileChanged(type);
+    }
 
-        //also update the current wallpaper if needed
-        Preferences preferences = new Preferences(context);
-        if (preferences.isEnabled()) {
-            if (preferences.changeWithTheme()) {
-                if (((context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_NO) == type.light) {
-                    loadWallpaper(type);
+    public void saveFromBitmap(WallpaperType type, Bitmap bitmap) {
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(getPathForWallpaper(type));
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.flush();
+                    out.close();
                 }
-            } else {
-                Calendar calendar = Calendar.getInstance();
-                int timeOfDay = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-                int startTime = preferences.getScheduleStart();
-                int endTime = preferences.getScheduleEnd();
-                if (((endTime < timeOfDay && timeOfDay < startTime) || (startTime < endTime && (timeOfDay < startTime || endTime < timeOfDay))) == type.light) {
-                    loadWallpaper(type);
-                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
+        onFileChanged(type);
     }
 
     private void saveToFile(InputStream in, File file) {
@@ -118,11 +122,31 @@ public class WallpaperUtil {
         } finally {
             try {
                 if (out != null) {
+                    out.flush();
                     out.close();
                 }
                 in.close();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    private void onFileChanged(WallpaperType type) {
+        Preferences preferences = new Preferences(context);
+        if (preferences.isEnabled()) {
+            if (preferences.changeWithTheme()) {
+                if (((context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_NO) == type.light) {
+                    loadWallpaper(type);
+                }
+            } else {
+                Calendar calendar = Calendar.getInstance();
+                int timeOfDay = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+                int startTime = preferences.getScheduleStart();
+                int endTime = preferences.getScheduleEnd();
+                if (((endTime < timeOfDay && timeOfDay < startTime) || (startTime < endTime && (timeOfDay < startTime || endTime < timeOfDay))) == type.light) {
+                    loadWallpaper(type);
+                }
             }
         }
     }

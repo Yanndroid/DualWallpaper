@@ -26,9 +26,9 @@ import java.util.Date;
 import de.dlyt.yanndroid.dualwallpaper.Preferences;
 import de.dlyt.yanndroid.dualwallpaper.R;
 import de.dlyt.yanndroid.dualwallpaper.trigger.ThemeTrigger;
+import de.dlyt.yanndroid.dualwallpaper.ui.adapter.ViewPagerAdapter;
 import de.dlyt.yanndroid.dualwallpaper.utils.TriggerUtil;
 import de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil;
-import de.dlyt.yanndroid.dualwallpaper.ui.adapter.ViewPagerAdapter;
 import dev.oneuiproject.oneui.dialog.StartEndTimePickerDialog;
 import dev.oneuiproject.oneui.preference.LayoutPreference;
 import dev.oneuiproject.oneui.preference.SwitchBarPreference;
@@ -86,6 +86,7 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
             ViewPager2 viewPager = previewPreference.findViewById(R.id.viewPager);
             viewPager.seslGetListView().setNestedScrollingEnabled(false);
             viewPager.setAdapter(mAdapter);
+            viewPager.setOffscreenPageLimit(1);
 
             TabLayout tabLayout = previewPreference.findViewById(R.id.tabLayout);
             tabLayout.seslSetSubTabStyle();

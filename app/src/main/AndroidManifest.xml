@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.dlyt.yanndroid.dualwallpaper">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -19,19 +18,15 @@
         <meta-data
             android:name="SamsungBasicInteraction"
             android:value="SEP10" />
-
         <meta-data
             android:name="com.samsung.android.icon_container.has_icon_container"
             android:value="true" />
-
         <meta-data
             android:name="com.samsung.android.icon_container.feature_appicon"
             android:value="ADAPTIVEICON_SHADOW" />
-
         <meta-data
             android:name="theming-meta"
             android:value="meta_998_sesl_app" />
-
         <meta-data
             android:name="theming-meta-xml"
             android:value="@xml/theming_meta" />

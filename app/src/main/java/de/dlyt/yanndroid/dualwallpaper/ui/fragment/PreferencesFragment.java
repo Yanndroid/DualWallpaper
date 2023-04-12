@@ -91,6 +91,10 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
             TabLayout tabLayout = previewPreference.findViewById(R.id.tabLayout);
             tabLayout.seslSetSubTabStyle();
 
+            TypedValue colorPrimaryDark = new TypedValue();
+            mContext.getTheme().resolveAttribute(dev.oneuiproject.oneui.design.R.attr.colorPrimaryDark, colorPrimaryDark, true);
+            tabLayout.seslSetSubTabSelectedIndicatorColor(colorPrimaryDark.data);
+
             new TabLayoutMediator(tabLayout, viewPager, (tab, position)
                     -> tab.setText(((ViewPagerAdapter) viewPager.getAdapter()).getTitle(position))).attach();
         } else {

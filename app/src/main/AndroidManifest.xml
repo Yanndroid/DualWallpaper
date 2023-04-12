@@ -29,7 +29,7 @@
             android:value="meta_998_sesl_app" />
         <meta-data
             android:name="theming-meta-xml"
-            android:value="@xml/theming_meta" />
+            android:value="@xml/meta_998_sesl_app" />
 
         <activity
             android:name=".ui.activity.MainActivity"

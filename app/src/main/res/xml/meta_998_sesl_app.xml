@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ThemeMetaData
+    FormatVersion="1.3"
+    GuideVersion="1.4">
+    <AppMetaData
+        Name="DualWallpaper"
+        TargetApi="21"
+        TargetPackageName="de.dlyt.yanndroid.dualwallpaper"
+        VersionCode="1"
+        VersionName="">
+        <Include RefName="SESL" />
+        <Property
+            Comment="Icon and text color"
+            DestAttribName="oui_primary_text_color, oui_primary_icon_color, oui_appinfolayout_info_text_color, oui_drawerlayout_header_icon_color"
+            UID="4444_1"
+            ValueRef="1-11-3"
+            ValueType="TintColor" />
+        <Property
+            Comment="Tab text color"
+            DestAttribName="sesl_tablayout_subtab_text_color_selected, sesl_tablayout_subtab_text_color_selected_dark, sesl_tablayout_subtab_text_color_default, sesl_tablayout_subtab_text_color_default_dark"
+            UID="4444_2"
+            ValueRef="1-40-3"
+            ValueType="TextColor" />
+    </AppMetaData>
+</ThemeMetaData>

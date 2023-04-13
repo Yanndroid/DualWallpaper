@@ -4,24 +4,14 @@
 
 Customize your device even more by having two separate sets of wallpapers for light and dark mode. When your device's theme changes, this app will automatically change your wallpaper to the one you've selected. It is also possible to switch wallpapers based on the time.
 
+You can chose an image, a plain color or a gradient for each wallpaper (light/dark and lockscreen/homescreen). Those will then be used as wallpapers when the device's theme changes or the choosen time is reached.
+
+And all of this for free and without ads!
+
 <img loading="lazy" src="readme-res/1.png" height="350"/> <img loading="lazy" src="readme-res/2.png" height="350"/> <img loading="lazy" src="readme-res/3.png" height="350"/> <img loading="lazy" src="readme-res/4.png" height="350"/> <img loading="lazy" src="readme-res/5.png" height="350"/> <img loading="lazy" src="readme-res/6.png" height="350"/> <img loading="lazy" src="readme-res/7.png" height="350"/>
 
 ## Translations
 
-<a href='https://poeditor.com/join/project/is9K6CJAaL'><img alt='POEditor' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NC42MDIiIGhlaWdodD0iNDQuMTQ2IiB2aWV3Qm94PSIwIDAgNTQuNjAyIDQ0LjE0NiI+CiAgPGcgaWQ9ImxvZ28iIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMTUyKSI+CiAgICA8cmVjdCBpZD0icmVjdGFuZ2xlIiB3aWR0aD0iMjQuMDA5IiBoZWlnaHQ9IjMwLjU5MiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTIuNzc5IC0xNDcuNzQpIiBmaWxsPSIjZmZmIi8+CiAgICA8cGF0aCBpZD0iUGF0aF81MzAiIGRhdGEtbmFtZT0iUGF0aCA1MzAiIGQ9Ik0xMy4wNjgtNzZIMHY1LjU3NGMwLDkuMzYyLDcuNTgyLDE2LjUsMTYuOTM0LDE2LjVoMTUuNmE0LjI1OSw0LjI1OSwwLDAsMCw0LjI1Ni00LjI2MnYtNS4zNTJIMjkuNTM1Yy03LjUyLDAtMTQuOTQ1LTUuMzIyLTE2LjQ2OC0xMi40NTkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgLTUzLjkyNykiIGZpbGw9IiMwMGViZmYiLz4KICAgIDxwYXRoIGlkPSJQYXRoXzUzMSIgZGF0YS1uYW1lPSJQYXRoIDUzMSIgZD0iTTEyLjc3OS0xMzIuNmMwLTguNDQ2LDguMzItMTUuMTM2LDE2Ljc1Ni0xNS4xMzZoNy4yNTNBNC4yNTksNC4yNTksMCwwLDAsMzIuNTMyLTE1MmgtMTUuNkM3LjU4Mi0xNTIsMC0xNDQuODY0LDAtMTM1LjV2NS41NzRIMTMuMDY4YTEyLjgxNywxMi44MTcsMCwwLDEtLjI4OC0yLjY3NyIgZmlsbD0iIzY2ZmRkYSIvPgogICAgPHBhdGggaWQ9IlBhdGhfNTMyIiBkYXRhLW5hbWU9IlBhdGggNTMyIiBkPSJNODEuMjA2LTEyNGEzLjg3MiwzLjg3MiwwLDAsMC0zLjg3MiwzLjg3MiwzLjg3MywzLjg3MywwLDAsMCwzLjg3MiwzLjg3MiwzLjg3MywzLjg3MywwLDAsMCwzLjg3Mi0zLjg3MkEzLjg3MiwzLjg3MiwwLDAsMCw4MS4yMDYtMTI0IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNTQuODczIC0xOS44NjgpIiBmaWxsPSIjNDA0OTUzIi8+CiAgICA8cGF0aCBpZD0iUGF0aF81MzMiIGRhdGEtbmFtZT0iUGF0aCA1MzMiIGQ9Ik04Mi40OTUtMTIwYTEuMTYzLDEuMTYzLDAsMCwwLTEuMTYyLDEuMTYxLDEuMTY0LDEuMTY0LDAsMCwwLDEuMTYyLDEuMTYzLDEuMTY0LDEuMTY0LDAsMCwwLDEuMTYyLTEuMTYzQTEuMTYzLDEuMTYzLDAsMCwwLDgyLjQ5NS0xMjAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC01Ny43MTEgLTIyLjcwNikiIGZpbGw9IiNmZmYiLz4KICAgIDxwYXRoIGlkPSJQYXRoXzUzNCIgZGF0YS1uYW1lPSJQYXRoIDUzNCIgZD0iTTc0LjY2Ni04NC45SDg1LjEyMlYtODhINzQuNjY2WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTUyLjk4MSAtNDUuNDEyKSIgZmlsbD0iIzQwNDk1MyIvPgogICAgPHBhdGggaWQ9IlBhdGhfNTM1IiBkYXRhLW5hbWU9IlBhdGggNTM1IiBkPSJNMTQuNDItODkuMzMzYTMuNzUyLDMuNzUyLDAsMCwwLTMuNzUsMy43NTEsMy43NSwzLjc1LDAsMCwwLDMuNzUsMy43NSwzLjc1MSwzLjc1MSwwLDAsMCwzLjc1LTMuNzUsMy43NTIsMy43NTIsMCwwLDAtMy43NS0zLjc1MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTcuNTkyIC00NC41OTMpIiBmaWxsPSIjZmZjNDAwIi8+CiAgICA8cGF0aCBpZD0iUGF0aF81MzYiIGRhdGEtbmFtZT0iUGF0aCA1MzYiIGQ9Ik0xMzkuMDUtMTMxLjkyYTE4LjQ3MiwxOC40NzIsMCwwLDAtMTIuMzgzLTUuNDEzdjE5LjI0NkwxMzkuMDUtMTA1LjdhMTguNTM3LDE4LjUzNywwLDAsMCwwLTI2LjIxN20tMTIuMzgzLDE5Ljc1OHY5LjIwNmExMy4zLDEzLjMsMCwwLDAsNi44NjMtMi4zNDNaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtODkuODc4IC0xMC40MDcpIiBmaWxsPSIjNDA0OTUzIi8+CiAgICA8cGF0aCBpZD0iUGF0aF81MzciIGRhdGEtbmFtZT0iUGF0aCA1MzciIGQ9Ik00NC4yODgtNzZINDR2MTIuNjE0YTUuMiw1LjIsMCwwLDAsNS4yMTksNS4ybDE4Ljc5LS4wN3YtNS4yODRINjAuNzU2Yy03LjUyLDAtMTQuOTQ1LTUuMzIyLTE2LjQ2OC0xMi40NTkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0zMS4yMjEgLTUzLjkyNykiIGZpbGw9IiMzYTQyODciLz4KICA8L2c+Cjwvc3ZnPgo=' height='80'/></a>
+<a href='https://poeditor.com/join/project/is9K6CJAaL'><img alt='POEditor' src='readme-res/poe.svg' height='70'/></a>
 
 You can help me out with translations [here](https://poeditor.com/join/project/is9K6CJAaL).
-
-<img src='https://badges.genua.fr/poeditor/progress/540883/ar-eg?style=flat-square&token=72c9dedbe504cf199ec2429d4823b393'/>
-<img src='https://badges.genua.fr/poeditor/progress/540883/cs?style=flat-square&token=72c9dedbe504cf199ec2429d4823b393'/>
-<img src='https://badges.genua.fr/poeditor/progress/540883/nl?style=flat-square&token=72c9dedbe504cf199ec2429d4823b393'/>
-<img src='https://badges.genua.fr/poeditor/progress/540883/en?style=flat-square&token=72c9dedbe504cf199ec2429d4823b393'/>
-<img src='https://badges.genua.fr/poeditor/progress/540883/fr?style=flat-square&token=72c9dedbe504cf199ec2429d4823b393'/>
-<img src='https://badges.genua.fr/poeditor/progress/540883/de?style=flat-square&token=72c9dedbe504cf199ec2429d4823b393'/>
-<img src='https://badges.genua.fr/poeditor/progress/540883/hu?style=flat-square&token=72c9dedbe504cf199ec2429d4823b393'/>
-<img src='https://badges.genua.fr/poeditor/progress/540883/id?style=flat-square&token=72c9dedbe504cf199ec2429d4823b393'/>
-<img src='https://badges.genua.fr/poeditor/progress/540883/it?style=flat-square&token=72c9dedbe504cf199ec2429d4823b393'/>
-<img src='https://badges.genua.fr/poeditor/progress/540883/ru?style=flat-square&token=72c9dedbe504cf199ec2429d4823b393'/>
-<img src='https://badges.genua.fr/poeditor/progress/540883/th?style=flat-square&token=72c9dedbe504cf199ec2429d4823b393'/>
-<img src='https://badges.genua.fr/poeditor/progress/540883/tr?style=flat-square&token=72c9dedbe504cf199ec2429d4823b393'/>
-<img src='https://badges.genua.fr/poeditor/progress/540883/vi?style=flat-square&token=72c9dedbe504cf199ec2429d4823b393'/>

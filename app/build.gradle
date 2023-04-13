@@ -11,8 +11,8 @@ android {
         applicationId "de.dlyt.yanndroid.dualwallpaper"
         minSdk 26
         targetSdk 32 //can't use 33: https://issuetracker.google.com/u/2/issues/237124750
-        versionCode 6
-        versionName "2.0.0"
+        versionCode 7
+        versionName "2.0.1"
 
         resConfigs 'en', 'ar-rEG', 'cs', 'de', 'fr', 'hu', 'in', 'it', 'nl', 'ru', 'th', 'tr', 'vi'
 

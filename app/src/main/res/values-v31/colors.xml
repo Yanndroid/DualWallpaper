@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="ic_launcher_background">@android:color/system_accent1_300</color>
+
     <color name="sesl_round_and_bgcolor_light">@android:color/system_neutral1_50</color>
     <color name="sesl_action_bar_background_color_light">@color/sesl_round_and_bgcolor_light</color>
     <color name="sesl_primary_color_light">@android:color/system_accent1_300</color>
     <color name="sesl_primary_dark_color_light">@android:color/system_accent1_600</color>
-    <color name="ic_launcher_background_light">@android:color/system_accent1_300</color>
 
     <color name="sesl_round_and_bgcolor_dark">@android:color/system_neutral1_900</color>
     <color name="sesl_action_bar_background_color_dark">@color/sesl_round_and_bgcolor_dark</color>
     <color name="sesl_primary_color_dark">@android:color/system_accent1_400</color>
     <color name="sesl_primary_dark_color_dark">@android:color/system_accent1_400</color>
-    <color name="ic_launcher_background_dark">@android:color/system_accent1_800</color>
 </resources>

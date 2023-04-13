@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Handler;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -71,10 +73,16 @@ public class WallpaperOptionsDialog {
     }
 
     private void optionUseCurrent() {
-        new Thread(() -> {
-            mWallpaperUtil.saveFromCurrent(mType);
-            mCallback.onDone();
-        }).start();
+        if (DeviceUtil.hasStoragePermission(mContext)) {
+            Handler handler = new Handler();
+            new Thread(() -> {
+                if (mWallpaperUtil.saveFromCurrent(mType)) {
+                    mCallback.onDone();
+                } else {
+                    handler.post(() -> Toast.makeText(mContext, R.string.wallpaper_not_supported, Toast.LENGTH_SHORT).show());
+                }
+            }).start();
+        }
     }
 
     private void optionPickNew() {

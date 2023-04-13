@@ -49,7 +49,7 @@ configurations.all {
 }
 
 dependencies {
-    implementation 'io.github.oneuiproject:design:1.2.3.beta'
+    implementation 'io.github.oneuiproject:design:1.2.3'
     implementation 'io.github.oneuiproject.sesl:appcompat:1.3.0'
     implementation 'io.github.oneuiproject.sesl:material:1.4.0'
     implementation 'io.github.oneuiproject.sesl:recyclerview:1.3.0'

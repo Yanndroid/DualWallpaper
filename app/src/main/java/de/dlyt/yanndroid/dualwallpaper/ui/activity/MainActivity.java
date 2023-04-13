@@ -2,11 +2,9 @@ package de.dlyt.yanndroid.dualwallpaper.ui.activity;
 
 import static de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil.WallpaperType;
 
-import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -15,7 +13,6 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentManager;
 
@@ -26,6 +23,7 @@ import de.dlyt.yanndroid.dualwallpaper.R;
 import de.dlyt.yanndroid.dualwallpaper.trigger.ThemeTrigger;
 import de.dlyt.yanndroid.dualwallpaper.ui.adapter.ViewPagerAdapter;
 import de.dlyt.yanndroid.dualwallpaper.ui.fragment.PreferencesFragment;
+import de.dlyt.yanndroid.dualwallpaper.utils.DeviceUtil;
 import de.dlyt.yanndroid.dualwallpaper.utils.TriggerUtil;
 import de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil;
 import dev.oneuiproject.oneui.layout.ToolbarLayout;
@@ -45,9 +43,7 @@ public class MainActivity extends AppCompatActivity {
         wallpaperUtil = new WallpaperUtil(this);
         adapter = new ViewPagerAdapter(this, wallpaperUtil);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
-        }
+        if (!DeviceUtil.hasStoragePermission(this)) DeviceUtil.requestStoragePermission(this);
         NotificationManagerCompat.from(this).createNotificationChannel(new NotificationChannel(ThemeTrigger.CHANNEL_ID, getString(R.string.wallpaper_service), NotificationManager.IMPORTANCE_MIN));
 
         ToolbarLayout toolbarLayout = findViewById(R.id.toolbarLayout);

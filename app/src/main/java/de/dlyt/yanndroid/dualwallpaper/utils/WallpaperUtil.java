@@ -1,18 +1,15 @@
 package de.dlyt.yanndroid.dualwallpaper.utils;
 
-import android.Manifest;
 import android.app.WallpaperManager;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
-import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
+import androidx.annotation.RequiresPermission;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,7 +19,6 @@ import java.io.InputStream;
 import java.util.Calendar;
 
 import de.dlyt.yanndroid.dualwallpaper.Preferences;
-import de.dlyt.yanndroid.dualwallpaper.R;
 
 public class WallpaperUtil {
 
@@ -72,16 +68,13 @@ public class WallpaperUtil {
         }
     }
 
-    public void saveFromCurrent(WallpaperType type) {
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            ParcelFileDescriptor fileDescriptor = mWallpaperManager.getWallpaperFile(type.home ? WallpaperManager.FLAG_SYSTEM : WallpaperManager.FLAG_LOCK);
-            if (fileDescriptor == null) {
-                Toast.makeText(mContext, R.string.wallpaper_not_supported, Toast.LENGTH_SHORT).show();
-                return;
-            }
-            //saveToFile(new ParcelFileDescriptor.AutoCloseInputStream(fileDescriptor), new File(getPathForWallpaper(type)));
-            saveFromBitmap(streamToBitmap(new ParcelFileDescriptor.AutoCloseInputStream(fileDescriptor)), type, true, false);
-        }
+    @RequiresPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+    public boolean saveFromCurrent(WallpaperType type) {
+        ParcelFileDescriptor fileDescriptor = mWallpaperManager.getWallpaperFile(type.home ? WallpaperManager.FLAG_SYSTEM : WallpaperManager.FLAG_LOCK);
+        if (fileDescriptor == null) return false;
+        //saveToFile(new ParcelFileDescriptor.AutoCloseInputStream(fileDescriptor), new File(getPathForWallpaper(type)));
+        saveFromBitmap(streamToBitmap(new ParcelFileDescriptor.AutoCloseInputStream(fileDescriptor)), type, true, false);
+        return true;
     }
 
     public void saveFromUri(Uri wallpaperUri, WallpaperType type) throws FileNotFoundException {

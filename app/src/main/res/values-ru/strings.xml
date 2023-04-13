@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="service_notification">"Сервисное уведомление"</string>
-    <string name="select">"Выбрать"</string>
-    <string name="set_wallpaper_as">"Установить обои как"</string>
-    <string name="wallpaper_not_supported">"Текущие обои не поддерживаются."</string>
-    <string name="noti_desc">"Нажмите, чтобы скрыть это уведомление"</string>
-    <string name="wallpaper_service">"Сервис обоев"</string>
-    <string name="delete">"Удалить"</string>
-    <string name="wallpaper_and_style">"Обои и стиль"</string>
-    <string name="s_next_day">%s на следующий день</string>
-    <string name="light">"Светлый"</string>
-    <string name="translations">"Переводы"</string>
     <string name="dark">"Тёмный"</string>
+    <string name="delete">"Удалить"</string>
     <string name="donate">"Пожертвовать"</string>
     <string name="home_screen">"Домашний экран"</string>
+    <string name="light">"Светлый"</string>
     <string name="lock_screen">"Экран блокировки"</string>
+    <string name="noti_desc">"Нажмите, чтобы скрыть это уведомление"</string>
+    <string name="s_next_day">"%s на следующий день"</string>
+    <string name="select">"Выбрать"</string>
+    <string name="service_notification">"Сервисное уведомление"</string>
+    <string name="set_schedule">"Установить расписание"</string>
+    <string name="set_wallpaper_as">"Установить обои как"</string>
     <string name="source_code">"Исходный код"</string>
-    <string name="set_schedule">Установить расписание</string>
+    <string name="translations">"Переводы"</string>
     <string name="use_current">"Использовать текущий"</string>
+    <string name="wallpaper_and_style">"Обои и стиль"</string>
+    <string name="wallpaper_not_supported">"Текущие обои не поддерживаются."</string>
+    <string name="wallpaper_service">"Сервис обоев"</string>
 </resources>

@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="service_notification">"Notification de service"</string>
-    <string name="select">"Sélectionner"</string>
-    <string name="set_wallpaper_as">"Définir fond d'écran comme"</string>
-    <string name="wallpaper_not_supported">"Le fond d'écran actuel est non supporté"</string>
-    <string name="noti_desc">"Cliquez pour cacher cette notification"</string>
-    <string name="wallpaper_service">"Service de fond d'écran"</string>
-    <string name="delete">"Supprimer"</string>
-    <string name="wallpaper_and_style">"Fond d'écran et style"</string>
-    <string name="s_next_day">%s le jour suivant</string>
-    <string name="light">"Clair"</string>
-    <string name="translations">"Traductions"</string>
     <string name="dark">"Foncé"</string>
+    <string name="delete">"Supprimer"</string>
     <string name="donate">"Faire un don"</string>
     <string name="home_screen">"Écran d'accueil"</string>
+    <string name="light">"Clair"</string>
     <string name="lock_screen">"Écran de verrouillage"</string>
+    <string name="noti_desc">"Cliquez pour cacher cette notification"</string>
+    <string name="s_next_day">"%s le jour suivant"</string>
+    <string name="select">"Sélectionner"</string>
+    <string name="service_notification">"Notification de service"</string>
+    <string name="set_schedule">"Définir le programme"</string>
+    <string name="set_wallpaper_as">"Définir fond d'écran comme"</string>
     <string name="source_code">"Code source"</string>
-    <string name="set_schedule">Définir le programme</string>
+    <string name="translations">"Traductions"</string>
     <string name="use_current">"Utiliser l'actuel"</string>
+    <string name="wallpaper_and_style">"Fond d'écran et style"</string>
+    <string name="wallpaper_not_supported">"Le fond d'écran actuel est non supporté"</string>
+    <string name="wallpaper_service">"Service de fond d'écran"</string>
 </resources>

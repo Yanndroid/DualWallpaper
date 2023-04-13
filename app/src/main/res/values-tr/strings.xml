@@ -1,21 +1,37 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="service_notification">"Hizmet bildirimi"</string>
-    <string name="select">"Seç"</string>
-    <string name="set_wallpaper_as">"Duvar kağıdı ayarla"</string>
-    <string name="wallpaper_not_supported">"Seçili duvar kağıdı desteklenmiyor"</string>
-    <string name="noti_desc">"Bildirimi kapatmak için dokunun"</string>
-    <string name="wallpaper_service">"Duvar kağıdı servisi"</string>
-    <string name="delete">"Sil"</string>
-    <string name="wallpaper_and_style">"Duvar kağıdı ve tarzı"</string>
-    <string name="s_next_day">%s sonraki gün</string>
-    <string name="light">"Aydınlık"</string>
-    <string name="translations">"Tercümeler"</string>
+    <!-- Fuzzy -->
     <string name="dark">"Karanlık"</string>
+    <!-- Fuzzy -->
+    <string name="delete">"Sil"</string>
+    <!-- Fuzzy -->
     <string name="donate">"Destekleyin"</string>
+    <!-- Fuzzy -->
     <string name="home_screen">"Ana ekran"</string>
+    <!-- Fuzzy -->
+    <string name="light">"Aydınlık"</string>
+    <!-- Fuzzy -->
     <string name="lock_screen">"Kilit ekranı"</string>
+    <!-- Fuzzy -->
+    <string name="noti_desc">"Bildirimi kapatmak için dokunun"</string>
+    <string name="s_next_day">"%s sonraki gün"</string>
+    <!-- Fuzzy -->
+    <string name="select">"Seç"</string>
+    <!-- Fuzzy -->
+    <string name="service_notification">"Hizmet bildirimi"</string>
+    <string name="set_schedule">"Program ayarla"</string>
+    <!-- Fuzzy -->
+    <string name="set_wallpaper_as">"Duvar kağıdı ayarla"</string>
+    <!-- Fuzzy -->
     <string name="source_code">"Kaynak kodu"</string>
-    <string name="set_schedule">Program ayarla</string>
+    <!-- Fuzzy -->
+    <string name="translations">"Tercümeler"</string>
+    <!-- Fuzzy -->
     <string name="use_current">"Mevcut kullanın"</string>
+    <!-- Fuzzy -->
+    <string name="wallpaper_and_style">"Duvar kağıdı ve tarzı"</string>
+    <!-- Fuzzy -->
+    <string name="wallpaper_not_supported">"Seçili duvar kağıdı desteklenmiyor"</string>
+    <!-- Fuzzy -->
+    <string name="wallpaper_service">"Duvar kağıdı servisi"</string>
 </resources>

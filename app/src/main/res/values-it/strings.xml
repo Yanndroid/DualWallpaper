@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="service_notification">"Notifiche"</string>
-    <string name="select">"Seleziona"</string>
-    <string name="set_wallpaper_as">"Imposta come sfondo"</string>
-    <string name="wallpaper_not_supported">"Lo sfondo attuale non è supportato"</string>
-    <string name="noti_desc">"Tocca per nascondere la notifica."</string>
-    <string name="wallpaper_service">"Gestito dall'applicazione"</string>
-    <string name="delete">"Elimina"</string>
-    <string name="wallpaper_and_style">"Sfondo e stile"</string>
-    <string name="s_next_day">Giorno successivo %s</string>
-    <string name="light">"Giorno"</string>
-    <string name="translations">"Traduzioni"</string>
     <string name="dark">"Notte"</string>
+    <string name="delete">"Elimina"</string>
     <string name="donate">"Dona"</string>
     <string name="home_screen">"Schermata home"</string>
+    <string name="light">"Giorno"</string>
     <string name="lock_screen">"Schermata di blocco"</string>
+    <string name="noti_desc">"Tocca per nascondere la notifica."</string>
+    <string name="s_next_day">"Giorno successivo %s"</string>
+    <string name="select">"Seleziona"</string>
+    <string name="service_notification">"Notifiche"</string>
+    <string name="set_schedule">"Imposta programmazione"</string>
+    <string name="set_wallpaper_as">"Imposta come sfondo"</string>
     <string name="source_code">"Codice sorgente"</string>
-    <string name="set_schedule">Imposta programmazione</string>
+    <string name="translations">"Traduzioni"</string>
     <string name="use_current">"Utilizza lo sfondo attuale"</string>
+    <string name="wallpaper_and_style">"Sfondo e stile"</string>
+    <string name="wallpaper_not_supported">"Lo sfondo attuale non è supportato"</string>
+    <string name="wallpaper_service">"Gestito dall'applicazione"</string>
 </resources>

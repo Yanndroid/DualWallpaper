@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="service_notification">"Dịch vụ thông báo"</string>
-    <string name="select">"Chọn"</string>
-    <string name="set_wallpaper_as">"Đặt hình nền làm"</string>
-    <string name="wallpaper_not_supported">"Hình nền hiện tại không được hỗ trợ"</string>
-    <string name="noti_desc">"Nhấn để ẩn thông báo này"</string>
-    <string name="wallpaper_service">"Dịch vụ hình nền"</string>
-    <string name="delete">"Xóa"</string>
-    <string name="wallpaper_and_style">"Hình nền và phong cách"</string>
-    <string name="s_next_day">%s ngày tiếp theo</string>
-    <string name="light">"Sáng"</string>
-    <string name="translations">"Phiên dịch"</string>
     <string name="dark">"Tối"</string>
+    <string name="delete">"Xóa"</string>
     <string name="donate">"Ủng hộ"</string>
     <string name="home_screen">"Màn hình chính"</string>
+    <string name="light">"Sáng"</string>
     <string name="lock_screen">"Màn hình khóa"</string>
+    <string name="noti_desc">"Nhấn để ẩn thông báo này"</string>
+    <string name="s_next_day">"%s ngày tiếp theo"</string>
+    <string name="select">"Chọn"</string>
+    <string name="service_notification">"Dịch vụ thông báo"</string>
+    <string name="set_schedule">"Đặt lịch biểu"</string>
+    <string name="set_wallpaper_as">"Đặt hình nền làm"</string>
     <string name="source_code">"Mã nguồn"</string>
-    <string name="set_schedule">Đặt lịch biểu</string>
+    <string name="translations">"Phiên dịch"</string>
     <string name="use_current">"Sử dụng hình nền hiện tại"</string>
+    <string name="wallpaper_and_style">"Hình nền và phong cách"</string>
+    <string name="wallpaper_not_supported">"Hình nền hiện tại không được hỗ trợ"</string>
+    <string name="wallpaper_service">"Dịch vụ hình nền"</string>
 </resources>

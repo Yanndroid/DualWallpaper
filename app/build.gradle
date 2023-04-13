@@ -10,9 +10,11 @@ android {
     defaultConfig {
         applicationId "de.dlyt.yanndroid.dualwallpaper"
         minSdk 26
-        targetSdk 32
-        versionCode 5
-        versionName "1.1.3"
+        targetSdk 32 //can't use 33: https://issuetracker.google.com/u/2/issues/237124750
+        versionCode 6
+        versionName "2.0.0"
+
+        resConfigs 'en', 'ar-rEG', 'cs', 'de', 'fr', 'hu', 'in', 'it', 'nl', 'ru', 'th', 'tr', 'vi'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

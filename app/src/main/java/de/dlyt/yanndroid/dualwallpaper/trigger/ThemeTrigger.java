@@ -24,6 +24,7 @@ public class ThemeTrigger extends Service {
     public void onCreate() {
         mWallpaperUtil = new WallpaperUtil(this);
         updateDarkMode(getResources().getConfiguration());
+        mWallpaperUtil.loadWallpapers(mIsDarkMode);
     }
 
     @Nullable
@@ -45,8 +46,6 @@ public class ThemeTrigger extends Service {
                         PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE))
                 .setVisibility(NotificationCompat.VISIBILITY_SECRET)
                 .build());
-        updateDarkMode(getBaseContext().getResources().getConfiguration());
-        mWallpaperUtil.loadWallpapers(mIsDarkMode);
         return START_STICKY;
     }
 

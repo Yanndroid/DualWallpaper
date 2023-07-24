@@ -3,6 +3,15 @@ plugins {
     id 'com.hyperdevs.poeditor'
 }
 
+def locales = file('src/main/res').listFiles(new FilenameFilter() {
+    @Override
+    boolean accept(File dir, String name) {
+        return name.matches('values-.*') && new File(dir, name).list().contains('strings.xml')
+    }
+}).collect { it.name.substring(7) }
+
+println("Locales: " + locales.join(', '))
+
 android {
     namespace "de.dlyt.yanndroid.dualwallpaper"
     compileSdk 32
@@ -14,7 +23,7 @@ android {
         versionCode 7
         versionName "2.0.1"
 
-        resConfigs 'en', 'ar-rEG', 'cs', 'de', 'fr', 'hu', 'in', 'it', 'nl', 'ru', 'th', 'tr', 'vi'
+        resConfigs locales
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

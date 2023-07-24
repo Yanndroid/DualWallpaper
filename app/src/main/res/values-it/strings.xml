@@ -2,11 +2,15 @@
 <resources>
     <string name="dark">"Notte"</string>
     <string name="delete">"Elimina"</string>
+    <string name="display_settings">"Impostazioni dello schermo"</string>
     <string name="donate">"Dona"</string>
+    <string name="gradient_color">"Gradiente"</string>
     <string name="home_screen">"Schermata home"</string>
     <string name="light">"Giorno"</string>
     <string name="lock_screen">"Schermata di blocco"</string>
     <string name="noti_desc">"Tocca per nascondere la notifica."</string>
+    <string name="pick_new_image">"Scegli una nuova immagine"</string>
+    <string name="plain_color">"Tinta unita"</string>
     <string name="s_next_day">"Giorno successivo %s"</string>
     <string name="select">"Seleziona"</string>
     <string name="service_notification">"Notifiche"</string>
@@ -14,6 +18,9 @@
     <string name="set_wallpaper_as">"Imposta come sfondo"</string>
     <string name="source_code">"Codice sorgente"</string>
     <string name="translations">"Traduzioni"</string>
+    <string name="trigger">"Programmazione"</string>
+    <string name="trigger_device_theme">"Tema del dispositivo"</string>
+    <string name="trigger_time">"Programmazione personalizzata"</string>
     <string name="use_current">"Utilizza lo sfondo attuale"</string>
     <string name="wallpaper_and_style">"Sfondo e stile"</string>
     <string name="wallpaper_not_supported">"Lo sfondo attuale non è supportato"</string>

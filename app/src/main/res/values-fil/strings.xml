@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="delete">"Ibura"</string>
+    <string name="donate">"Mag Donate"</string>
+    <string name="home_screen">"home screen"</string>
+    <string name="lock_screen">"i-lock ang screen"</string>
+    <string name="noti_desc">"Itago ang notification"</string>
+    <string name="pick_new_image">"Pumilin ng Imahe"</string>
+    <string name="select">"Piliin"</string>
+    <string name="set_wallpaper_as">"Gawing Wallpaper na"</string>
+    <string name="translations">"Lenguahe"</string>
+    <string name="trigger_device_theme">"Tema ng Device"</string>
+    <string name="trigger_time">"Oras"</string>
+    <string name="use_current">"H'wag Baguhin"</string>
+</resources>

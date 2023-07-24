@@ -3,11 +3,15 @@
     <!-- Fuzzy -->
     <string name="dark">"Gelap"</string>
     <string name="delete">"Hapus"</string>
+    <string name="display_settings">"Pengaturan Tampilan"</string>
     <string name="donate">"Donasi"</string>
+    <string name="gradient_color">"Warna gradien"</string>
     <string name="home_screen">"Layar depan"</string>
     <string name="light">"Terang"</string>
     <string name="lock_screen">"Kunci layar"</string>
     <string name="noti_desc">"Klik untuk menyembunyikan pemberitahuan ini"</string>
+    <string name="pick_new_image">"Pilih gambar baru"</string>
+    <string name="plain_color">"Warna polos"</string>
     <string name="s_next_day">"%s hari berikutnya"</string>
     <string name="select">"Pilih"</string>
     <string name="service_notification">"Layanan Notifikasi"</string>
@@ -15,6 +19,9 @@
     <string name="set_wallpaper_as">"Atur wallpaper sebagai"</string>
     <string name="source_code">"Kode Sumber"</string>
     <string name="translations">"Terjemahan"</string>
+    <string name="trigger">"Pemicu"</string>
+    <string name="trigger_device_theme">"Tema perangkat"</string>
+    <string name="trigger_time">"Waktu"</string>
     <string name="use_current">"Gunakan saat ini"</string>
     <string name="wallpaper_and_style">"Wallpaper dan Gaya"</string>
     <string name="wallpaper_not_supported">"Wallpaper saat ini tidak didukung."</string>

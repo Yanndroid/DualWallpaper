@@ -2,11 +2,15 @@
 <resources>
     <string name="dark">"Тёмный"</string>
     <string name="delete">"Удалить"</string>
+    <string name="display_settings">"Настройки экрана"</string>
     <string name="donate">"Пожертвовать"</string>
+    <string name="gradient_color">"Цвет градиента"</string>
     <string name="home_screen">"Домашний экран"</string>
     <string name="light">"Светлый"</string>
     <string name="lock_screen">"Экран блокировки"</string>
     <string name="noti_desc">"Нажмите, чтобы скрыть это уведомление"</string>
+    <string name="pick_new_image">"Выбрать новое изображение"</string>
+    <string name="plain_color">"Цвет заливки"</string>
     <string name="s_next_day">"%s на следующий день"</string>
     <string name="select">"Выбрать"</string>
     <string name="service_notification">"Сервисное уведомление"</string>
@@ -14,6 +18,9 @@
     <string name="set_wallpaper_as">"Установить обои как"</string>
     <string name="source_code">"Исходный код"</string>
     <string name="translations">"Переводы"</string>
+    <string name="trigger">"Условие срабатывания"</string>
+    <string name="trigger_device_theme">"Тема устройства"</string>
+    <string name="trigger_time">"Время"</string>
     <string name="use_current">"Использовать текущий"</string>
     <string name="wallpaper_and_style">"Обои и стиль"</string>
     <string name="wallpaper_not_supported">"Текущие обои не поддерживаются."</string>

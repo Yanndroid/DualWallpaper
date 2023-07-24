@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dark">"Tumma"</string>
+    <string name="delete">"Poista"</string>
+    <string name="display_settings">"Näyttö Asetukset"</string>
+    <string name="donate">"Lahjoita"</string>
+    <string name="gradient_color">"Gradientin väri"</string>
+    <string name="home_screen">"Kotinäyttö"</string>
+    <string name="light">"Kirkas"</string>
+    <string name="lock_screen">"Lukitusnäyttö"</string>
+    <string name="noti_desc">"Paina suljettaeksi tämä ilmoitus."</string>
+    <string name="pick_new_image">"Valitse uusi kuva"</string>
+    <string name="plain_color">"Tavallinen väri"</string>
+    <string name="s_next_day">"%s seuraava päivä"</string>
+    <string name="select">"Valitse"</string>
+    <string name="service_notification">"Palvelu Ilmoitus"</string>
+    <string name="set_schedule">"Aseta Aikataulu"</string>
+    <string name="set_wallpaper_as">"Aseta taustakuva"</string>
+    <string name="source_code">"Lähdekoodi"</string>
+    <string name="translations">"Käännökset"</string>
+    <string name="trigger">"Laukaisu"</string>
+    <string name="trigger_device_theme">"Laite Teema"</string>
+    <string name="trigger_time">"Aika"</string>
+    <string name="use_current">"Käytä nykyistä"</string>
+    <string name="wallpaper_and_style">"Taustakuva ja Tyyli"</string>
+    <string name="wallpaper_not_supported">"Nykyinen taustakuva ei ole tuettu."</string>
+    <string name="wallpaper_service">"Taustakuva Palvelu"</string>
+</resources>

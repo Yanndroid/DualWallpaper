@@ -38,7 +38,6 @@
     <string name="preference_trigger_time">"Programlı"</string>
     <string name="dialog_use_current">"Mevcut duvar kağıdını kullanın"</string>
     <string name="related_wallpaper_and_style">"Duvar kağıdı ve stil"</string>
-    <string name="toast_wallpaper_not_supported">"Mevcut duvar kağıdı desteklenmiyor"</string>
     <!-- Fuzzy -->
     <string name="notification_title">"Duvar kağıdı servisi"</string>
 </resources>

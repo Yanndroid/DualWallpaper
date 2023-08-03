@@ -16,12 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.File;
 
 import de.dlyt.yanndroid.dualwallpaper.R;
-import de.dlyt.yanndroid.dualwallpaper.ui.dialog.WallpaperOptionsDialog;
+import de.dlyt.yanndroid.dualwallpaper.ui.dialog.WallpaperActionsDialog;
 import de.dlyt.yanndroid.dualwallpaper.utils.DeviceUtil;
 import de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil;
 import de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil.WallpaperType;
 
 public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.ViewHolder> {
+
     private Context mContext;
     private WallpaperUtil mWallpaperUtil;
 
@@ -61,24 +62,21 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         boolean isLightModeTab = position == 0;
-        setImageViewSize(holder.lock_screen_preview);
-        setImageViewSize(holder.home_screen_preview);
-        if (isLightModeTab) {
-            holder.lock_screen_preview.setOnClickListener(v -> wallpaperOptionsDialog((ImageView) v, WallpaperType.LOCK_LIGHT));
-            holder.home_screen_preview.setOnClickListener(v -> wallpaperOptionsDialog((ImageView) v, WallpaperType.HOME_LIGHT));
-            updateImages(holder.lock_screen_preview, WallpaperType.LOCK_LIGHT);
-            updateImages(holder.home_screen_preview, WallpaperType.HOME_LIGHT);
-        } else {
-            holder.lock_screen_preview.setOnClickListener(v -> wallpaperOptionsDialog((ImageView) v, WallpaperType.LOCK_DARK));
-            holder.home_screen_preview.setOnClickListener(v -> wallpaperOptionsDialog((ImageView) v, WallpaperType.HOME_DARK));
-            updateImages(holder.lock_screen_preview, WallpaperType.LOCK_DARK);
-            updateImages(holder.home_screen_preview, WallpaperType.HOME_DARK);
-        }
+        initImageViewSize(holder.lock_screen_preview);
+        initImageViewSize(holder.home_screen_preview);
+
+        WallpaperType lock_type = isLightModeTab ? WallpaperType.LOCK_LIGHT : WallpaperType.LOCK_DARK;
+        WallpaperType home_type = isLightModeTab ? WallpaperType.HOME_LIGHT : WallpaperType.HOME_DARK;
+
+        holder.lock_screen_preview.setOnClickListener(v -> showActionsDialog((ImageView) v, lock_type));
+        holder.home_screen_preview.setOnClickListener(v -> showActionsDialog((ImageView) v, home_type));
+        updateImages(holder.lock_screen_preview, lock_type);
+        updateImages(holder.home_screen_preview, home_type);
     }
 
     private void updateImages(ImageView imageView, WallpaperType type) {
         new Thread(() -> {
-            Bitmap image = BitmapFactory.decodeFile(mWallpaperUtil.getPathForWallpaper(type));
+            Bitmap image = BitmapFactory.decodeFile(mWallpaperUtil.getWallpaperTypePath(type));
             if (image == null) {
                 imageView.post(() -> {
                     imageView.setBackgroundColor(Color.TRANSPARENT);
@@ -95,17 +93,17 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
         }).start();
     }
 
-    private void setImageViewSize(ImageView imageView) {
+    private void initImageViewSize(ImageView imageView) {
         Point size = DeviceUtil.getDisplaySize(mContext);
-        ViewGroup.LayoutParams lph = imageView.getLayoutParams();
-        lph.width = (int) (size.x / 2.8);
-        lph.height = (int) (size.y / 2.8);
+        ViewGroup.LayoutParams params = imageView.getLayoutParams();
+        params.width = (int) (size.x / 2.8);
+        params.height = (int) (size.y / 2.8);
     }
 
-    private void wallpaperOptionsDialog(ImageView imageView, WallpaperType type) {
-        File wallpaperFile = new File(mWallpaperUtil.getPathForWallpaper(type));
+    private void showActionsDialog(ImageView imageView, WallpaperType type) {
+        File wallpaperFile = new File(mWallpaperUtil.getWallpaperTypePath(type));
 
-        new WallpaperOptionsDialog(mContext, mWallpaperUtil, type, wallpaperFile.exists(), new WallpaperOptionsDialog.Callback() {
+        new WallpaperActionsDialog(mContext, mWallpaperUtil, type, wallpaperFile.exists(), new WallpaperActionsDialog.Callback() {
             @Override
             public void onDone() {
                 updateImages(imageView, type);

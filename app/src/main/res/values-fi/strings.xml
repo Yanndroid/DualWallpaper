@@ -22,6 +22,5 @@
     <string name="preference_trigger_time">"Aika"</string>
     <string name="dialog_use_current">"Käytä nykyistä"</string>
     <string name="related_wallpaper_and_style">"Taustakuva ja Tyyli"</string>
-    <string name="toast_wallpaper_not_supported">"Nykyinen taustakuva ei ole tuettu."</string>
     <string name="notification_title">"Taustakuva Palvelu"</string>
 </resources>

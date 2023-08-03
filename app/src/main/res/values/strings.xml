@@ -23,8 +23,6 @@
     <string name="preference_trigger_theme">"Device theme"</string>
     <string name="preference_trigger_time">"Time"</string>
 
-    <string name="toast_wallpaper_not_supported">"The current wallpaper is not supported."</string>
-
     <string name="related_display_settings">"Display Settings"</string>
     <string name="related_service_notification">"Service Notification"</string>
     <string name="related_wallpaper_and_style">"Wallpaper and Style"</string>
@@ -35,5 +33,9 @@
 
     <string name="notification_title">"Wallpaper Service"</string>
     <string name="notification_description">"Click to hide this notification"</string>
+
+    <string name="error_wallpaper_not_supported">"Your current wallpaper is not supported."</string>
+    <string name="error_storage_permission_not_granted">"Storage permission not granted."</string>
+    <string name="error_saving_wallpaper">"Error while saving wallpaper."</string>
 
 </resources>

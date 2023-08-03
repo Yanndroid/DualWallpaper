@@ -15,6 +15,5 @@
     <string name="about_translations">"Překlady"</string>
     <string name="dialog_use_current">"Použít stávající"</string>
     <string name="related_wallpaper_and_style">"Pozadí a styl"</string>
-    <string name="toast_wallpaper_not_supported">"Stávající pozadí není podporováno."</string>
     <string name="notification_title">"Služba pozadí"</string>
 </resources>

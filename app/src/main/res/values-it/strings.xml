@@ -22,6 +22,5 @@
     <string name="preference_trigger_time">"Programmazione personalizzata"</string>
     <string name="dialog_use_current">"Utilizza lo sfondo attuale"</string>
     <string name="related_wallpaper_and_style">"Sfondo e stile"</string>
-    <string name="toast_wallpaper_not_supported">"Lo sfondo attuale non è supportato"</string>
     <string name="notification_title">"Gestito dall'applicazione"</string>
 </resources>

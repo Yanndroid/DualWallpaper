@@ -6,17 +6,15 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentManager;
-
-import java.io.FileNotFoundException;
 
 import de.dlyt.yanndroid.dualwallpaper.Preferences;
 import de.dlyt.yanndroid.dualwallpaper.R;
@@ -33,18 +31,18 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int PICKER_REQUEST_CODE = 5000;
 
-    private WallpaperUtil wallpaperUtil;
-    private ViewPagerAdapter adapter;
+    private WallpaperUtil mWallpaperUtil;
+    private ViewPagerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        wallpaperUtil = new WallpaperUtil(this);
-        adapter = new ViewPagerAdapter(this, wallpaperUtil);
+        mWallpaperUtil = new WallpaperUtil(this);
+        mAdapter = new ViewPagerAdapter(this, mWallpaperUtil);
 
         if (!DeviceUtil.hasStoragePermission(this)) DeviceUtil.requestStoragePermission(this);
-        NotificationManagerCompat.from(this).createNotificationChannel(new NotificationChannel(ThemeTrigger.CHANNEL_ID, getString(R.string.notification_title), NotificationManager.IMPORTANCE_MIN));
+        NotificationManagerCompat.from(this).createNotificationChannel(new NotificationChannel(ThemeTrigger.NOTIFICATION_CHANNEL_ID, getString(R.string.notification_title), NotificationManager.IMPORTANCE_MIN));
 
         ToolbarLayout toolbarLayout = findViewById(R.id.toolbarLayout);
         toolbarLayout.setNavigationButtonAsBack();
@@ -59,17 +57,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         PreferencesFragment fragment = new PreferencesFragment();
-        fragment.initFields(adapter, wallpaperUtil);
+        fragment.initFields(mAdapter, mWallpaperUtil);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_preferences, fragment).commit();
         fragmentManager.executePendingTransactions();
 
         if (getIntent().getAction().equals(Intent.ACTION_ATTACH_DATA))
-            setWallpaperIntent(getIntent());
+            handleSetWallpaperIntent(getIntent());
     }
 
-    private void setWallpaperIntent(Intent intent) {
+    private void handleSetWallpaperIntent(Intent intent) {
         WallpaperType[] types = WallpaperType.values();
         CharSequence[] items = new CharSequence[types.length];
         for (int i = 0; i < types.length; i++) {
@@ -82,23 +80,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_set_wallpaper_as)
                 .setNegativeButton(dev.oneuiproject.oneui.design.R.string.oui_common_cancel, null)
-                .setItems(items, (dialog1, which) -> {
-                    /*try {
-                        wallpaperUtil.saveFromUri(intent.getData(), types[which]);
-                        adapter.notifyItemChanged(types[which].light ? 0 : 1);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }*/
-                    Handler handler = new Handler();
-                    new Thread(() -> {
-                        try {
-                            wallpaperUtil.saveFromUri(intent.getData(), types[which]);
-                            handler.post(() -> adapter.notifyItemChanged(types[which].light ? 0 : 1));
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    }).start();
-                })
+                .setItems(items, (dialog1, which) -> saveWallpaperFromIntent(intent, types[which]))
                 .create();
         dialog.show();
     }
@@ -106,26 +88,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //TODO convert, crop, scale
+        //TODO crop, scale > scaleToScreen=false
         if (resultCode == RESULT_OK && requestCode >> 2 == PICKER_REQUEST_CODE >> 2) {
-            /*try {
-                WallpaperType type = WallpaperType.values()[requestCode - PICKER_REQUEST_CODE];
-                wallpaperUtil.saveFromUri(data.getData(), type);
-                adapter.notifyItemChanged(type.light ? 0 : 1);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }*/
-            Handler handler = new Handler();
-            new Thread(() -> {
-                try {
-                    WallpaperType type = WallpaperType.values()[requestCode - PICKER_REQUEST_CODE];
-                    wallpaperUtil.saveFromUri(data.getData(), type);
-                    handler.post(() -> adapter.notifyItemChanged(type.light ? 0 : 1));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }).start();
+            WallpaperType type = WallpaperType.values()[requestCode - PICKER_REQUEST_CODE];
+            saveWallpaperFromIntent(data, type);
         }
+    }
+
+    private void saveWallpaperFromIntent(Intent intent, WallpaperType type) {
+        mWallpaperUtil.saveFromIntent(intent, type, new WallpaperUtil.SaveCallback() {
+            @Override
+            public void onSuccess(WallpaperType type) {
+                mAdapter.notifyItemChanged(type.light ? 0 : 1);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Toast.makeText(MainActivity.this, R.string.error_saving_wallpaper, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

@@ -15,6 +15,5 @@
     <string name="about_translations">"الترجمات"</string>
     <string name="dialog_use_current">"استخدم الحالي"</string>
     <string name="related_wallpaper_and_style">"الخلفية والنمط"</string>
-    <string name="toast_wallpaper_not_supported">"الخلفية الحالية غير مدعومة"</string>
     <string name="notification_title">"خدمة الخلفيات"</string>
 </resources>

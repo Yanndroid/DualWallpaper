@@ -2,23 +2,24 @@ package de.dlyt.yanndroid.dualwallpaper.utils;
 
 import android.app.WallpaperManager;
 import android.content.Context;
-import android.content.res.Configuration;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.net.Uri;
+import android.os.Handler;
 import android.os.ParcelFileDescriptor;
 
-import androidx.annotation.RequiresPermission;
-
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Calendar;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import de.dlyt.yanndroid.dualwallpaper.Preferences;
+import de.dlyt.yanndroid.dualwallpaper.trigger.ThemeTrigger;
+import de.dlyt.yanndroid.dualwallpaper.trigger.TimeTrigger;
 
 public class WallpaperUtil {
 
@@ -37,6 +38,12 @@ public class WallpaperUtil {
         }
     }
 
+    public interface SaveCallback {
+        void onSuccess(WallpaperType type);
+
+        void onError(Exception e);
+    }
+
     private Context mContext;
     private WallpaperManager mWallpaperManager;
 
@@ -45,42 +52,78 @@ public class WallpaperUtil {
         this.mWallpaperManager = WallpaperManager.getInstance(context);
     }
 
-    public String getPathForWallpaper(WallpaperType type) {
+    public String getWallpaperTypePath(WallpaperType type) {
         return mContext.getFilesDir().getPath() + type.fileName;
     }
 
     public void loadWallpapers(boolean darkMode) {
-        if (darkMode) {
-            loadWallpaper(WallpaperUtil.WallpaperType.HOME_DARK);
-            loadWallpaper(WallpaperUtil.WallpaperType.LOCK_DARK);
-        } else {
-            loadWallpaper(WallpaperUtil.WallpaperType.HOME_LIGHT);
-            loadWallpaper(WallpaperUtil.WallpaperType.LOCK_LIGHT);
+        for (WallpaperType wallpaperType : WallpaperType.values()) {
+            if (wallpaperType.light != darkMode) loadWallpaper(wallpaperType);
         }
     }
 
-    public void loadWallpaper(WallpaperType type) {
+    private void loadWallpaper(WallpaperType type) {
         try {
-            InputStream inputStream = new FileInputStream(getPathForWallpaper(type));
+            InputStream inputStream = Files.newInputStream(Paths.get(getWallpaperTypePath(type)));
             mWallpaperManager.setStream(inputStream, null, false, type.home ? WallpaperManager.FLAG_SYSTEM : WallpaperManager.FLAG_LOCK);
+            //TODO notify system ?
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    @RequiresPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-    public boolean saveFromCurrent(WallpaperType type) {
-        ParcelFileDescriptor fileDescriptor = mWallpaperManager.getWallpaperFile(type.home ? WallpaperManager.FLAG_SYSTEM : WallpaperManager.FLAG_LOCK);
-        if (fileDescriptor == null) return false;
-        //saveToFile(new ParcelFileDescriptor.AutoCloseInputStream(fileDescriptor), new File(getPathForWallpaper(type)));
-        saveFromBitmap(streamToBitmap(new ParcelFileDescriptor.AutoCloseInputStream(fileDescriptor)), type, true, false);
-        return true;
+
+    public void saveFromCurrent(WallpaperType type, SaveCallback callback) {
+        try {
+            ParcelFileDescriptor fileDescriptor = mWallpaperManager.getWallpaperFile(type.home ? WallpaperManager.FLAG_SYSTEM : WallpaperManager.FLAG_LOCK);
+            if (fileDescriptor == null) throw new FileNotFoundException();
+
+            saveFromBitmap(streamToBitmap(new ParcelFileDescriptor.AutoCloseInputStream(fileDescriptor)), type, true, false, callback);
+        } catch (SecurityException | FileNotFoundException e) {
+            e.printStackTrace();
+            callback.onError(e);
+        }
     }
 
-    public void saveFromUri(Uri wallpaperUri, WallpaperType type) throws FileNotFoundException {
-        //saveToFile(context.getContentResolver().openInputStream(wallpaperUri), new File(getPathForWallpaper(type)));
-        //onFileChanged(type);
-        saveFromBitmap(streamToBitmap(mContext.getContentResolver().openInputStream(wallpaperUri)), type, true, false);
+    public void saveFromIntent(Intent intent, WallpaperType type, SaveCallback callback) {
+        try {
+            Uri data = intent.getData();
+            if (data == null) throw new FileNotFoundException();
+            saveFromBitmap(streamToBitmap(mContext.getContentResolver().openInputStream(data)), type, true, false, callback);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            callback.onError(e);
+        }
+    }
+
+    public void saveFromBitmap(Bitmap bitmap, WallpaperType type, boolean scaleToScreen, boolean png, SaveCallback callback) {
+        Handler handler = new Handler();
+        new Thread(() -> {
+
+            Bitmap input = scaleToScreen ? scaleToScreenSize(bitmap) : bitmap;
+            FileOutputStream output = null;
+
+            try {
+                output = new FileOutputStream(getWallpaperTypePath(type));
+                input.compress(png ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG, 100, output);
+                handler.post(() -> callback.onSuccess(type));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                handler.post(() -> callback.onError(e));
+            } finally {
+                try {
+                    if (output != null) {
+                        output.flush();
+                        output.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            onFileChanged(type);
+
+        }).start();
     }
 
     private Bitmap streamToBitmap(InputStream in) {
@@ -93,67 +136,13 @@ public class WallpaperUtil {
         return Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth() * scale), (int) (bitmap.getHeight() * scale), true);
     }
 
-    public void saveFromBitmap(Bitmap bitmap, WallpaperType type, boolean crop, boolean png) {
-        bitmap = scaleToScreenSize(bitmap);
-
-        FileOutputStream out = null;
-        try {
-            out = new FileOutputStream(getPathForWallpaper(type));
-            bitmap.compress(png ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG, 100, out);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (out != null) {
-                    out.flush();
-                    out.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        onFileChanged(type);
-    }
-
-    /*private void saveToFile(InputStream in, File file) {
-        OutputStream out = null;
-        try {
-            out = new FileOutputStream(file);
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (out != null) {
-                    out.flush();
-                    out.close();
-                }
-                in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }*/
-
     private void onFileChanged(WallpaperType type) {
         Preferences preferences = new Preferences(mContext);
         if (preferences.isEnabled()) {
-            if (preferences.changeWithTheme()) {
-                if (((mContext.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_NO) == type.light) {
-                    loadWallpaper(type);
-                }
-            } else {
-                Calendar calendar = Calendar.getInstance();
-                int timeOfDay = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-                int startTime = preferences.getScheduleStart();
-                int endTime = preferences.getScheduleEnd();
-                if (((endTime < timeOfDay && timeOfDay < startTime) || (startTime < endTime && (timeOfDay < startTime || endTime < timeOfDay))) == type.light) {
-                    loadWallpaper(type);
-                }
+            boolean isNowDark = preferences.changeWithTheme() ? ThemeTrigger.isNowDark(mContext.getResources().getConfiguration()) : TimeTrigger.isNowDark(preferences);
+
+            if (type.light != isNowDark) {
+                loadWallpaper(type);
             }
         }
     }

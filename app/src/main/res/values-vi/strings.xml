@@ -15,6 +15,5 @@
     <string name="about_translations">"Phiên dịch"</string>
     <string name="dialog_use_current">"Sử dụng hình nền hiện tại"</string>
     <string name="related_wallpaper_and_style">"Hình nền và phong cách"</string>
-    <string name="toast_wallpaper_not_supported">"Hình nền hiện tại không được hỗ trợ"</string>
     <string name="notification_title">"Dịch vụ hình nền"</string>
 </resources>

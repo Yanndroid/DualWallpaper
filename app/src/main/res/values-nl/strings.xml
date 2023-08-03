@@ -22,6 +22,5 @@
     <string name="preference_trigger_time">"Tijd"</string>
     <string name="dialog_use_current">"Gebruik huidige"</string>
     <string name="related_wallpaper_and_style">"Achtergrond en Stijl"</string>
-    <string name="toast_wallpaper_not_supported">"De huidige achtergrond wordt niet ondersteund."</string>
     <string name="notification_title">"Achtergrond Service"</string>
 </resources>

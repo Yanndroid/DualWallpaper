@@ -22,6 +22,5 @@
     <string name="preference_trigger_time">"Période"</string>
     <string name="dialog_use_current">"Utiliser l'actuel"</string>
     <string name="related_wallpaper_and_style">"Fond d'écran et style"</string>
-    <string name="toast_wallpaper_not_supported">"Le fond d'écran actuel est non supporté"</string>
     <string name="notification_title">"Service de fond d'écran"</string>
 </resources>

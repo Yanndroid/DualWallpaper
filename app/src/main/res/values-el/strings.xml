@@ -22,6 +22,5 @@
     <string name="preference_trigger_time">"Ωρα"</string>
     <string name="dialog_use_current">"Χρησιμοποίησε το τρέχον"</string>
     <string name="related_wallpaper_and_style">"Ταπετσαρία και στύλ"</string>
-    <string name="toast_wallpaper_not_supported">"Η παρουσα ταπετσαρία δεν υποστηρίζεται."</string>
     <string name="notification_title">"Υπηρεσια ταπετσαρίας"</string>
 </resources>

@@ -9,7 +9,7 @@
         <item>1</item>
     </string-array>
 
-    <string-array name="select_dialog_options">
+    <string-array name="select_dialog_actions">
         <item>@string/dialog_pick_new_image</item>
         <item>@string/dialog_use_current</item>
         <item>@string/dialog_plain_color</item>

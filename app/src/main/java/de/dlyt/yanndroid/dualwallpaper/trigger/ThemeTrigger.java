@@ -1,7 +1,9 @@
 package de.dlyt.yanndroid.dualwallpaper.trigger;
 
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.IBinder;
@@ -15,15 +17,24 @@ import de.dlyt.yanndroid.dualwallpaper.utils.WallpaperUtil;
 
 public class ThemeTrigger extends Service {
 
-    public static final String CHANNEL_ID = "4000";
+    public static final String NOTIFICATION_CHANNEL_ID = "4000";
 
     private WallpaperUtil mWallpaperUtil;
     private boolean mIsDarkMode = false;
 
+    public static void start(Context context) {
+        context.startForegroundService(new Intent(context, ThemeTrigger.class));
+    }
+
+    public static void stop(Context context) {
+        context.stopService(new Intent(context, ThemeTrigger.class));
+    }
+
     @Override
     public void onCreate() {
         mWallpaperUtil = new WallpaperUtil(this);
-        updateDarkMode(getResources().getConfiguration());
+        mIsDarkMode = isNowDark(getResources().getConfiguration());
+
         mWallpaperUtil.loadWallpapers(mIsDarkMode);
     }
 
@@ -35,18 +46,28 @@ public class ThemeTrigger extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        startForeground(3000, new NotificationCompat.Builder(this, CHANNEL_ID)
+        startForeground(3000, buildForegroundNotification());
+        return START_STICKY;
+    }
+
+    private Notification buildForegroundNotification() {
+        return new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_oui_wallpaper_outline)
                 .setContentTitle(getString(R.string.notification_title))
                 .setContentText(getString(R.string.notification_description))
-                .setContentIntent(PendingIntent.getActivity(
-                        ThemeTrigger.this,
-                        0,
-                        new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName()).putExtra(Settings.EXTRA_CHANNEL_ID, "4000"),
-                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE))
+                .setContentIntent(getNotificationSettingsIntent())
                 .setVisibility(NotificationCompat.VISIBILITY_SECRET)
-                .build());
-        return START_STICKY;
+                .build();
+    }
+
+    private PendingIntent getNotificationSettingsIntent() {
+        return PendingIntent.getActivity(
+                ThemeTrigger.this,
+                0,
+                new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
+                        .putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName())
+                        .putExtra(Settings.EXTRA_CHANNEL_ID, NOTIFICATION_CHANNEL_ID),
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }
 
     @Override
@@ -55,11 +76,15 @@ public class ThemeTrigger extends Service {
     }
 
     private boolean updateDarkMode(Configuration newConfig) {
-        boolean newIsDarkMode = (newConfig.uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+        boolean newIsDarkMode = isNowDark(newConfig);
         if (mIsDarkMode != newIsDarkMode) {
             mIsDarkMode = newIsDarkMode;
             return true;
         }
         return false;
+    }
+
+    public static boolean isNowDark(Configuration configuration) {
+        return (configuration.uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
     }
 }

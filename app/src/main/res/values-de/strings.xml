@@ -22,6 +22,5 @@
     <string name="preference_trigger_time">"Zeit"</string>
     <string name="dialog_use_current">"Aktuellen benutzen"</string>
     <string name="related_wallpaper_and_style">"Hintergrund und Stil"</string>
-    <string name="toast_wallpaper_not_supported">"Der aktuelle Hintergrund wird nicht unterstützt."</string>
     <string name="notification_title">"Hintergrund Service"</string>
 </resources>

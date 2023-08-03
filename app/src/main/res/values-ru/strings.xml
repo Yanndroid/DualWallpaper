@@ -22,6 +22,5 @@
     <string name="preference_trigger_time">"Время"</string>
     <string name="dialog_use_current">"Использовать текущий"</string>
     <string name="related_wallpaper_and_style">"Обои и стиль"</string>
-    <string name="toast_wallpaper_not_supported">"Текущие обои не поддерживаются."</string>
     <string name="notification_title">"Сервис обоев"</string>
 </resources>

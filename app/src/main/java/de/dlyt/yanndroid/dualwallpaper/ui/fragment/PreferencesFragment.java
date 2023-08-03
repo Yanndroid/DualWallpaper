@@ -198,7 +198,7 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
     private void setRelativeLinkCard() {
         if (mRelativeLinkCard == null) {
             mRelativeLinkCard = PreferenceUtils.createRelatedCard(mContext);
-            mRelativeLinkCard.addButton(mContext.getString(R.string.related_service_notification), v -> startActivity(new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, mContext.getPackageName()).putExtra(Settings.EXTRA_CHANNEL_ID, ThemeTrigger.CHANNEL_ID)));
+            mRelativeLinkCard.addButton(mContext.getString(R.string.related_service_notification), v -> startActivity(new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, mContext.getPackageName()).putExtra(Settings.EXTRA_CHANNEL_ID, ThemeTrigger.NOTIFICATION_CHANNEL_ID)));
             mRelativeLinkCard.addButton(mContext.getString(R.string.related_display_settings), v -> startActivity(new Intent(Settings.ACTION_DISPLAY_SETTINGS)));
 
             Intent samsungWallpaperIntent = new Intent("com.samsung.intent.action.WALLPAPER_SETTING");

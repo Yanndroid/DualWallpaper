@@ -22,6 +22,5 @@
     <string name="preference_trigger_time">"시간"</string>
     <string name="dialog_use_current">"현재 배경화면 사용"</string>
     <string name="related_wallpaper_and_style">"배경화면 및 스타일"</string>
-    <string name="toast_wallpaper_not_supported">"현재 배경화면은 사용할 수 없습니다."</string>
     <string name="notification_title">"배경화면 서비스"</string>
 </resources>

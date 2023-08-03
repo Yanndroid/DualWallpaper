@@ -23,6 +23,5 @@
     <string name="preference_trigger_time">"Waktu"</string>
     <string name="dialog_use_current">"Gunakan saat ini"</string>
     <string name="related_wallpaper_and_style">"Wallpaper dan Gaya"</string>
-    <string name="toast_wallpaper_not_supported">"Wallpaper saat ini tidak didukung."</string>
     <string name="notification_title">"Layanan Wallpaper"</string>
 </resources>

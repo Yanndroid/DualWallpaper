@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="service_mode_entries">
-        <item>@string/trigger_device_theme</item>
-        <item>@string/trigger_time</item>
+        <item>@string/preference_trigger_theme</item>
+        <item>@string/preference_trigger_time</item>
     </string-array>
     <string-array name="service_mode_values">
         <item>0</item>
@@ -10,9 +10,9 @@
     </string-array>
 
     <string-array name="select_dialog_options">
-        <item>@string/pick_new_image</item>
-        <item>@string/use_current</item>
-        <item>@string/plain_color</item>
-        <item>@string/gradient_color</item>
+        <item>@string/dialog_pick_new_image</item>
+        <item>@string/dialog_use_current</item>
+        <item>@string/dialog_plain_color</item>
+        <item>@string/dialog_gradient_color</item>
     </string-array>
 </resources>

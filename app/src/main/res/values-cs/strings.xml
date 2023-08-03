@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dark">"Tmavý"</string>
-    <string name="delete">"Odstranit"</string>
-    <string name="donate">"Darování"</string>
+    <string name="theme_dark">"Tmavý"</string>
+    <string name="dialog_delete">"Odstranit"</string>
     <string name="home_screen">"Domovská obrazovka"</string>
-    <string name="light">"Světlý"</string>
+    <string name="theme_light">"Světlý"</string>
     <string name="lock_screen">"Zamykací obrazovka"</string>
-    <string name="noti_desc">"Klepněte pro skrytí oznámení"</string>
-    <string name="s_next_day">"%s příští den"</string>
-    <string name="select">"Vybrat"</string>
-    <string name="service_notification">"Oznámení služby"</string>
-    <string name="set_schedule">"Nastavit plán"</string>
-    <string name="set_wallpaper_as">"Nastavit pozadí jako"</string>
-    <string name="source_code">"Zdrojový kód"</string>
-    <string name="translations">"Překlady"</string>
-    <string name="use_current">"Použít stávající"</string>
-    <string name="wallpaper_and_style">"Pozadí a styl"</string>
-    <string name="wallpaper_not_supported">"Stávající pozadí není podporováno."</string>
-    <string name="wallpaper_service">"Služba pozadí"</string>
+    <string name="notification_description">"Klepněte pro skrytí oznámení"</string>
+    <string name="preference_time_next_day">"%s příští den"</string>
+    <string name="preference_preview_placeholder">"Vybrat"</string>
+    <string name="related_service_notification">"Oznámení služby"</string>
+    <string name="preference_set_schedule">"Nastavit plán"</string>
+    <string name="dialog_set_wallpaper_as">"Nastavit pozadí jako"</string>
+    <string name="about_source_code">"Zdrojový kód"</string>
+    <string name="about_translations">"Překlady"</string>
+    <string name="dialog_use_current">"Použít stávající"</string>
+    <string name="related_wallpaper_and_style">"Pozadí a styl"</string>
+    <string name="toast_wallpaper_not_supported">"Stávající pozadí není podporováno."</string>
+    <string name="notification_title">"Služba pozadí"</string>
 </resources>

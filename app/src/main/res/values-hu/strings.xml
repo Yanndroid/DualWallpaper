@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dark">"Sötét"</string>
-    <string name="delete">"Törlés"</string>
-    <string name="donate">"Adományozás"</string>
+    <string name="theme_dark">"Sötét"</string>
+    <string name="dialog_delete">"Törlés"</string>
     <string name="home_screen">"Kezdőképernyő"</string>
-    <string name="light">"Világos"</string>
+    <string name="theme_light">"Világos"</string>
     <string name="lock_screen">"Zárolt képernyő"</string>
-    <string name="noti_desc">"Koppints az értesítés elrejtéséhez"</string>
-    <string name="s_next_day">"Másnap %s-kor"</string>
-    <string name="select">"Kiválasztás"</string>
-    <string name="service_notification">"Szolgáltatás értesítés"</string>
-    <string name="set_schedule">"Ütemezés beállítása"</string>
-    <string name="set_wallpaper_as">"Beállítás háttérképként"</string>
-    <string name="source_code">"Forráskód"</string>
-    <string name="translations">"Fordítás"</string>
-    <string name="use_current">"Jelenlegi használata"</string>
-    <string name="wallpaper_and_style">"Háttérkép és stílus"</string>
-    <string name="wallpaper_not_supported">"A jelenlegi háttérkép nem támogatott"</string>
-    <string name="wallpaper_service">"Háttérkép szolgáltatás"</string>
+    <string name="notification_description">"Koppints az értesítés elrejtéséhez"</string>
+    <string name="preference_time_next_day">"Másnap %s-kor"</string>
+    <string name="preference_preview_placeholder">"Kiválasztás"</string>
+    <string name="related_service_notification">"Szolgáltatás értesítés"</string>
+    <string name="preference_set_schedule">"Ütemezés beállítása"</string>
+    <string name="dialog_set_wallpaper_as">"Beállítás háttérképként"</string>
+    <string name="about_source_code">"Forráskód"</string>
+    <string name="about_translations">"Fordítás"</string>
+    <string name="dialog_use_current">"Jelenlegi használata"</string>
+    <string name="related_wallpaper_and_style">"Háttérkép és stílus"</string>
+    <string name="toast_wallpaper_not_supported">"A jelenlegi háttérkép nem támogatott"</string>
+    <string name="notification_title">"Háttérkép szolgáltatás"</string>
 </resources>

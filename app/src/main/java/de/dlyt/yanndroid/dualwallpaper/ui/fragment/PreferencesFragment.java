@@ -168,7 +168,7 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
         calendar.set(DateFormat.is24HourFormat(context) ? 11 : 10, endHour);
         calendar.set(12, endMinute);
         if (startTime >= endTime) {
-            sb.append(context.getResources().getString(R.string.s_next_day, DateFormat.getTimeFormat(context).format(new Date(calendar.getTimeInMillis()))));
+            sb.append(context.getResources().getString(R.string.preference_time_next_day, DateFormat.getTimeFormat(context).format(new Date(calendar.getTimeInMillis()))));
         } else {
             sb.append(DateFormat.getTimeFormat(context).format(new Date(calendar.getTimeInMillis())));
         }
@@ -198,12 +198,12 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
     private void setRelativeLinkCard() {
         if (mRelativeLinkCard == null) {
             mRelativeLinkCard = PreferenceUtils.createRelatedCard(mContext);
-            mRelativeLinkCard.addButton(mContext.getString(R.string.service_notification), v -> startActivity(new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, mContext.getPackageName()).putExtra(Settings.EXTRA_CHANNEL_ID, ThemeTrigger.CHANNEL_ID)));
-            mRelativeLinkCard.addButton(mContext.getString(R.string.display_settings), v -> startActivity(new Intent(Settings.ACTION_DISPLAY_SETTINGS)));
+            mRelativeLinkCard.addButton(mContext.getString(R.string.related_service_notification), v -> startActivity(new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, mContext.getPackageName()).putExtra(Settings.EXTRA_CHANNEL_ID, ThemeTrigger.CHANNEL_ID)));
+            mRelativeLinkCard.addButton(mContext.getString(R.string.related_display_settings), v -> startActivity(new Intent(Settings.ACTION_DISPLAY_SETTINGS)));
 
             Intent samsungWallpaperIntent = new Intent("com.samsung.intent.action.WALLPAPER_SETTING");
             if (samsungWallpaperIntent.resolveActivity(mContext.getPackageManager()) != null) {
-                mRelativeLinkCard.addButton(mContext.getString(R.string.wallpaper_and_style), v -> startActivity(samsungWallpaperIntent));
+                mRelativeLinkCard.addButton(mContext.getString(R.string.related_wallpaper_and_style), v -> startActivity(samsungWallpaperIntent));
             }
 
             mRelativeLinkCard.show(this);

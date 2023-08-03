@@ -26,7 +26,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
-                android:text="@string/select" />
+                android:text="@string/preference_preview_placeholder" />
 
             <ImageView
                 android:id="@+id/lock_screen_preview"
@@ -69,7 +69,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
-                android:text="@string/select" />
+                android:text="@string/preference_preview_placeholder" />
 
             <ImageView
                 android:id="@+id/home_screen_preview"

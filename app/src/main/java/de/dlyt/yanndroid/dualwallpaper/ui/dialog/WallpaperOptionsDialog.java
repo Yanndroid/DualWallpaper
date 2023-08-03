@@ -39,9 +39,9 @@ public class WallpaperOptionsDialog {
         this.mCallback = callback;
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext)
-                .setTitle(mContext.getString(R.string.type_name_separator,
+                .setTitle(mContext.getString(R.string.dialog_type_name_separator,
                         type.home ? mContext.getString(R.string.home_screen) : mContext.getString(R.string.lock_screen),
-                        type.light ? mContext.getString(R.string.light) : mContext.getString(R.string.dark)))
+                        type.light ? mContext.getString(R.string.theme_light) : mContext.getString(R.string.theme_dark)))
                 .setNegativeButton(dev.oneuiproject.oneui.design.R.string.oui_common_cancel, null)
                 .setItems(R.array.select_dialog_options, (dialog, which) -> {
                     switch (which) {
@@ -60,7 +60,7 @@ public class WallpaperOptionsDialog {
                     }
                 });
         if (deleteButton) {
-            dialogBuilder.setPositiveButton(R.string.delete, (dialog, which) -> mCallback.onDelete());
+            dialogBuilder.setPositiveButton(R.string.dialog_delete, (dialog, which) -> mCallback.onDelete());
         }
         mDialog = dialogBuilder.create();
     }
@@ -79,7 +79,7 @@ public class WallpaperOptionsDialog {
                 if (mWallpaperUtil.saveFromCurrent(mType)) {
                     mCallback.onDone();
                 } else {
-                    handler.post(() -> Toast.makeText(mContext, R.string.wallpaper_not_supported, Toast.LENGTH_SHORT).show());
+                    handler.post(() -> Toast.makeText(mContext, R.string.toast_wallpaper_not_supported, Toast.LENGTH_SHORT).show());
                 }
             }).start();
         }

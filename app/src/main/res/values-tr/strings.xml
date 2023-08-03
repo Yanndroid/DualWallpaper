@@ -1,45 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Fuzzy -->
-    <string name="dark">"Karanlık"</string>
+    <string name="theme_dark">"Karanlık"</string>
     <!-- Fuzzy -->
-    <string name="delete">"Sil"</string>
-    <string name="display_settings">"Ekran ayarları"</string>
+    <string name="dialog_delete">"Sil"</string>
+    <string name="related_display_settings">"Ekran ayarları"</string>
     <!-- Fuzzy -->
-    <string name="donate">"Destekleyin"</string>
     <!-- Fuzzy -->
-    <string name="gradient_color">"Geçiş rengi"</string>
+    <string name="dialog_gradient_color">"Geçiş rengi"</string>
     <!-- Fuzzy -->
     <string name="home_screen">"Ana ekran"</string>
     <!-- Fuzzy -->
-    <string name="light">"Aydınlık"</string>
+    <string name="theme_light">"Aydınlık"</string>
     <!-- Fuzzy -->
     <string name="lock_screen">"Kilit ekranı"</string>
     <!-- Fuzzy -->
-    <string name="noti_desc">"Bildirimi kapatmak için dokunun"</string>
-    <string name="pick_new_image">"Yeni fotoğraf ekle"</string>
+    <string name="notification_description">"Bildirimi kapatmak için dokunun"</string>
+    <string name="dialog_pick_new_image">"Yeni fotoğraf ekle"</string>
     <!-- Fuzzy -->
-    <string name="plain_color">"Düz renk"</string>
-    <string name="s_next_day">"%s sonraki gün"</string>
+    <string name="dialog_plain_color">"Düz renk"</string>
+    <string name="preference_time_next_day">"%s sonraki gün"</string>
     <!-- Fuzzy -->
-    <string name="select">"Seç"</string>
+    <string name="preference_preview_placeholder">"Seç"</string>
     <!-- Fuzzy -->
-    <string name="service_notification">"Hizmet bildirimi"</string>
+    <string name="related_service_notification">"Hizmet bildirimi"</string>
     <!-- Fuzzy -->
-    <string name="set_schedule">"Program ekle"</string>
+    <string name="preference_set_schedule">"Program ekle"</string>
     <!-- Fuzzy -->
-    <string name="set_wallpaper_as">"Duvar kağıdı ayarla"</string>
+    <string name="dialog_set_wallpaper_as">"Duvar kağıdı ayarla"</string>
     <!-- Fuzzy -->
-    <string name="source_code">"Kaynak kodu"</string>
-    <string name="translations">"Tercüme"</string>
+    <string name="about_source_code">"Kaynak kodu"</string>
+    <string name="about_translations">"Tercüme"</string>
     <!-- Fuzzy -->
-    <string name="trigger">"Tetikleyici"</string>
+    <string name="preference_trigger">"Tetikleyici"</string>
     <!-- Fuzzy -->
-    <string name="trigger_device_theme">"Cihaz teması "</string>
-    <string name="trigger_time">"Programlı"</string>
-    <string name="use_current">"Mevcut duvar kağıdını kullanın"</string>
-    <string name="wallpaper_and_style">"Duvar kağıdı ve stil"</string>
-    <string name="wallpaper_not_supported">"Mevcut duvar kağıdı desteklenmiyor"</string>
+    <string name="preference_trigger_theme">"Cihaz teması "</string>
+    <string name="preference_trigger_time">"Programlı"</string>
+    <string name="dialog_use_current">"Mevcut duvar kağıdını kullanın"</string>
+    <string name="related_wallpaper_and_style">"Duvar kağıdı ve stil"</string>
+    <string name="toast_wallpaper_not_supported">"Mevcut duvar kağıdı desteklenmiyor"</string>
     <!-- Fuzzy -->
-    <string name="wallpaper_service">"Duvar kağıdı servisi"</string>
+    <string name="notification_title">"Duvar kağıdı servisi"</string>
 </resources>

@@ -43,7 +43,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     }
 
     public String getTitle(int position) {
-        int[] stringRes = {R.string.light, R.string.dark};
+        int[] stringRes = {R.string.theme_light, R.string.theme_dark};
         return mContext.getString(stringRes[position]);
     }
 

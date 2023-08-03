@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ViewPagerAdapter(this, wallpaperUtil);
 
         if (!DeviceUtil.hasStoragePermission(this)) DeviceUtil.requestStoragePermission(this);
-        NotificationManagerCompat.from(this).createNotificationChannel(new NotificationChannel(ThemeTrigger.CHANNEL_ID, getString(R.string.wallpaper_service), NotificationManager.IMPORTANCE_MIN));
+        NotificationManagerCompat.from(this).createNotificationChannel(new NotificationChannel(ThemeTrigger.CHANNEL_ID, getString(R.string.notification_title), NotificationManager.IMPORTANCE_MIN));
 
         ToolbarLayout toolbarLayout = findViewById(R.id.toolbarLayout);
         toolbarLayout.setNavigationButtonAsBack();
@@ -74,13 +74,13 @@ public class MainActivity extends AppCompatActivity {
         CharSequence[] items = new CharSequence[types.length];
         for (int i = 0; i < types.length; i++) {
             WallpaperType type = types[i];
-            items[i] = getString(R.string.type_name_separator,
+            items[i] = getString(R.string.dialog_type_name_separator,
                     type.home ? getString(R.string.home_screen) : getString(R.string.lock_screen),
-                    type.light ? getString(R.string.light) : getString(R.string.dark));
+                    type.light ? getString(R.string.theme_light) : getString(R.string.theme_dark));
         }
 
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle(R.string.set_wallpaper_as)
+                .setTitle(R.string.dialog_set_wallpaper_as)
                 .setNegativeButton(dev.oneuiproject.oneui.design.R.string.oui_common_cancel, null)
                 .setItems(items, (dialog1, which) -> {
                     /*try {

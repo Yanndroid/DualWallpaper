@@ -20,12 +20,12 @@
         android:entries="@array/service_mode_entries"
         android:entryValues="@array/service_mode_values"
         android:key="service_mode"
-        android:title="@string/trigger"
+        android:title="@string/preference_trigger"
         app:useSimpleSummaryProvider="true" />
 
     <Preference
         android:key="schedule"
         android:summary="@string/not_set"
-        app:title="@string/set_schedule" />
+        app:title="@string/preference_set_schedule" />
 
 </PreferenceScreen>

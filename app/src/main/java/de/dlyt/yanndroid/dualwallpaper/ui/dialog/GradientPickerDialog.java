@@ -60,7 +60,7 @@ public class GradientPickerDialog {
 
 
         this.mDialog = new AlertDialog.Builder(mContext)
-                .setTitle(R.string.gradient_color)
+                .setTitle(R.string.dialog_gradient_color)
                 .setView(content)
                 .setNegativeButton(dev.oneuiproject.oneui.design.R.string.oui_common_cancel, null)
                 .setPositiveButton(dev.oneuiproject.oneui.design.R.string.oui_common_done, (dialog, which) -> mCallback.onDone(mStartColor, mEndColor))

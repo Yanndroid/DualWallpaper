@@ -37,8 +37,8 @@ public class ThemeTrigger extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         startForeground(3000, new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_oui_wallpaper_outline)
-                .setContentTitle(getString(R.string.wallpaper_service))
-                .setContentText(getString(R.string.noti_desc))
+                .setContentTitle(getString(R.string.notification_title))
+                .setContentText(getString(R.string.notification_description))
                 .setContentIntent(PendingIntent.getActivity(
                         ThemeTrigger.this,
                         0,

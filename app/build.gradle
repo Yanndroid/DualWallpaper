@@ -14,14 +14,14 @@ println("Locales: " + locales.join(', '))
 
 android {
     namespace "de.dlyt.yanndroid.dualwallpaper"
-    compileSdk 32
+    compileSdk 34
 
     defaultConfig {
         applicationId "de.dlyt.yanndroid.dualwallpaper"
         minSdk 26
-        targetSdk 32 //can't use 33: https://issuetracker.google.com/u/2/issues/237124750
-        versionCode 7
-        versionName "2.0.1"
+        targetSdk 33 //can't use 33: https://issuetracker.google.com/u/2/issues/237124750
+        versionCode 8
+        versionName "2.0.2"
 
         resConfigs locales
 
